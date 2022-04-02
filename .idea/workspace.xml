@@ -124,6 +124,10 @@
       <workItem from="1648656354096" duration="5103000" />
       <workItem from="1648681102070" duration="4420000" />
       <workItem from="1648699631178" duration="10373000" />
+      <workItem from="1648778383647" duration="850000" />
+      <workItem from="1648790563485" duration="11366000" />
+      <workItem from="1648875253974" duration="9172000" />
+      <workItem from="1648889601625" duration="6197000" />
     </task>
     <servers />
   </component>
@@ -155,45 +159,45 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="259" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1648684678976" />
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom" timestamp="1648713694416">
+    <state width="956" height="269" key="GridCell.Tab.0.bottom" timestamp="1648895854544">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.0.center" timestamp="1648713694416">
+    <state width="956" height="269" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854544" />
+    <state width="956" height="269" key="GridCell.Tab.0.center" timestamp="1648895854544">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.0.left" timestamp="1648713694416">
+    <state width="956" height="269" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854544" />
+    <state width="956" height="269" key="GridCell.Tab.0.left" timestamp="1648895854544">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.0.right" timestamp="1648713694416">
+    <state width="956" height="269" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854544" />
+    <state width="956" height="269" key="GridCell.Tab.0.right" timestamp="1648895854544">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1648713694416">
+    <state width="956" height="269" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854544" />
+    <state width="956" height="344" key="GridCell.Tab.1.bottom" timestamp="1648895854537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1648713694416">
+    <state width="956" height="344" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854537" />
+    <state width="956" height="344" key="GridCell.Tab.1.center" timestamp="1648895854537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1648713694416">
+    <state width="956" height="344" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854537" />
+    <state width="956" height="344" key="GridCell.Tab.1.left" timestamp="1648895854537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
-    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1648713694416">
+    <state width="956" height="344" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854537" />
+    <state width="956" height="344" key="GridCell.Tab.1.right" timestamp="1648895854537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1648713694416" />
+    <state width="956" height="344" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1648895854537" />
     <state x="806" y="0" width="930" height="723" key="dock-window-1" timestamp="1648713499241">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="806" y="0" width="930" height="723" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1648713499241" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/BombDefusalApp$main.coverage" NAME="main Coverage Results" MODIFIED="1648708876538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
+    <SUITE FILE_PATH="coverage/BombDefusalApp$main.coverage" NAME="main Coverage Results" MODIFIED="1648895725100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
     <SUITE FILE_PATH="coverage/BombDefusalApp$cropping_example.coverage" NAME="cropping example Coverage Results" MODIFIED="1648707531298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Desktop/Python/Image cropping example" />
   </component>
 </project>

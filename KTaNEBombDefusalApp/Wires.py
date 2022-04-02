@@ -130,7 +130,7 @@ class Wires:
             elif wires == 6:
                 if num == 1:
                     self.selectLabel.config(text="IS THERE EXACTLY ONE YELLOW WIRE?")
-                    self.firstButton.config(command=lambda: self.yes_no_wires(True, 6, 3))
+                    self.firstButton.config(command=lambda: self.yes_no_wires(True, 6, 2))
                     self.secondButton.config(command=lambda: self.yes_no_wires(False, 6, 2))
 
                 elif num == 2:
@@ -187,4 +187,5 @@ class Wires:
     def cut_wire(self, string):
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
+        self.backButton.config(text="BACK TO\nMODULE SELECT", command=lambda: self.back_fun())
         self.selectLabel.config(text="CUT THE " + string + " WIRE")

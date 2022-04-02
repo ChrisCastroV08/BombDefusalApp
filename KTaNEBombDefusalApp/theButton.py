@@ -80,17 +80,6 @@ class TheButton:
                                     command=lambda: self.ask_the_button(color, "hold", -1, ""))
             self.fourthButton.config(image='', text="OTHER", font=self.manual_font,
                                      command=lambda: self.ask_the_button(color, "other", -1, ""))
-
-        elif batteries == -1:
-            self.selectLabel.config(text="HOW MANY BATTERIES ARE IN THE BOMB?")
-            self.firstButton.config(image='', text="NONE", font=self.manual_font,
-                                    command=lambda: self.ask_the_button(color, text, 0, ""))
-            self.secondButton.config(image='', text="1 BATTERY", font=self.manual_font,
-                                     command=lambda: self.ask_the_button(color, text, 1, ""))
-            self.thirdButton.config(image='', text="2 BATTERIES", font=self.manual_font,
-                                    command=lambda: self.ask_the_button(color, text, 2, ""))
-            self.fourthButton.config(image='', text="3 OR MORE BATTERIES", font=self.manual_font,
-                                     command=lambda: self.ask_the_button(color, text, 3, ""))
         elif indicator == "":
             self.fourthButton.pack_forget()
             self.selectLabel.config(text="IS THERE A LIT INDICATOR WITH ANY OF THESE LABELS?")
@@ -100,6 +89,19 @@ class TheButton:
                                      command=lambda: self.ask_the_button(color, text, batteries, "frk"))
             self.thirdButton.config(image='', text="OTHER/NONE", font=self.manual_font,
                                     command=lambda: self.ask_the_button(color, text, batteries, "other"))
+
+        elif batteries == -1 and (text == "detonate" or indicator == "frk"):
+            self.fourthButton.pack(side=LEFT, padx=10)
+            self.selectLabel.config(text="HOW MANY BATTERIES ARE IN THE BOMB?")
+            self.firstButton.config(image='', text="NONE", font=self.manual_font,
+                                    command=lambda: self.ask_the_button(color, text, 0, ""))
+            self.secondButton.config(image='', text="1 BATTERY", font=self.manual_font,
+                                     command=lambda: self.ask_the_button(color, text, 1, ""))
+            self.thirdButton.config(image='', text="2 BATTERIES", font=self.manual_font,
+                                    command=lambda: self.ask_the_button(color, text, 2, ""))
+            self.fourthButton.config(image='', text="3 OR MORE BATTERIES", font=self.manual_font,
+                                     command=lambda: self.ask_the_button(color, text, 3, ""))
+
         else:
             self.held_button("")
 
