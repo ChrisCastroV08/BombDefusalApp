@@ -10,7 +10,6 @@ but25state, but26state, but27state = False, False, False, False, False, False, F
                                      False, False, False, False, False, False, False, False, False,\
                                      False, False
 
-
 def clear():
     global but1state, but2state, but3state, but4state, \
         but5state, but6state, but7state, but8state, \
@@ -30,15 +29,18 @@ def clear():
 
 class Keypad:
 
-    def back_fun(self):
-        self.keypadWin.destroy()
+    def reset(self, num):
+        if num == 0:
+            self.keypadWin.destroy()
+        elif num == 1:
+            self.keypadWin.destroy()
+            self.__init__(self.root, self.back)
 
     def __init__(self, root, back):
         self.root = root
         self.back = back
         self.keypadWin = Toplevel(self.root)
         self.keypadWin.title("Keypads")
-        self.keypadWin.protocol("WM_DELETE_WINDOW", self.back_fun)
         self.keypadWin.resizable(False, False)
         self.keypadWin.config(bg=back)
         self.lftPos = (self.keypadWin.winfo_screenwidth() - 1000) / 2
@@ -191,7 +193,9 @@ class Keypad:
         self.s27.pack(side=LEFT, padx=5)
 
         self.backButton = Button(self.keypadWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
-                                 command=lambda: self.back_fun())
+                                 command=lambda: self.reset(0))
+        self.resetButton = Button(self.keypadWin, text="RESET", font=("Terminal", 20),
+                                  command=lambda: self.reset(1))
 
         self.backButton.pack(side=BOTTOM)
         clear()
@@ -215,6 +219,7 @@ class Keypad:
             self.nextButton.config(state=DISABLED)
 
     def compare(self, buttons):
+        self.resetButton.place(x=0, y=0)
         pressed = []
         symbols = [[1, 2, 3, 4, 5, 6, 7],
                    [8, 1, 7, 11, 12, 6, 14],
@@ -222,7 +227,6 @@ class Keypad:
                    [16, 17, 18, 5, 10, 14, 19],
                    [20, 19, 18, 22, 17, 23, 24],
                    [16, 8, 21, 25, 20, 26, 27]]
-
         global but1state, but2state, but3state, but4state, \
             but5state, but6state, but7state, but8state, \
             but9state, but10state, but11state, but12state, \
@@ -241,6 +245,7 @@ class Keypad:
         for i in range(len(buttons)):
             if buttons[i]:
                 pressed.append(i + 1)
+
         # FIRST COLUMN OF SYMBOLS
         if pressed[0] in symbols[0] and pressed[1] in symbols[0] and pressed[2] in symbols[0] \
                 and pressed[3] in symbols[0]:

@@ -4,15 +4,18 @@ from tkinter.font import Font
 
 class TheButton:
 
-    def back_fun(self):
-        self.theButtonWind.destroy()
+    def reset(self, num):
+        if num == 0:
+            self.theButtonWind.destroy()
+        elif num == 1:
+            self.theButtonWind.destroy()
+            self.__init__(self.root, self.back)
 
     def __init__(self, root, back):
         self.root = root
         self.back = back
         self.theButtonWind = Toplevel(self.root)
         self.theButtonWind.title("The Button")
-        self.theButtonWind.protocol("WM_DELETE_WINDOW", self.back_fun)
         self.theButtonWind.resizable(False, False)
         self.theButtonWind.config(bg=back)
         self.lftPos = (self.theButtonWind.winfo_screenwidth() - 1000) / 2
@@ -49,7 +52,9 @@ class TheButton:
         self.fifthButton.pack(side=LEFT, padx=10)
 
         self.backButton = Button(self.theButtonWind, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
-                                 command=lambda: self.back_fun())
+                                 command=lambda: self.reset(0))
+        self.resetButton = Button(self.theButtonWind, text="RESET", font=("Terminal", 20),
+                                  command=lambda: self.reset(1))
 
         self.backButton.pack(side=BOTTOM)
 
@@ -68,8 +73,8 @@ class TheButton:
                                      command=lambda: self.ask_the_button("red", "", -1, ""))
             self.fifthButton.config(image='', text="OTHER", font=self.manual_font,
                                     command=lambda: self.ask_the_button("other", "", -1, ""))
-
         elif text == "":
+            self.resetButton.place(x=0, y=0)
             self.fifthButton.pack_forget()
             self.selectLabel.config(text="WHAT DOES THE BUTTON SAY?")
             self.firstButton.config(image='', text="ABORT", font=self.manual_font,
@@ -80,7 +85,7 @@ class TheButton:
                                     command=lambda: self.ask_the_button(color, "hold", -1, ""))
             self.fourthButton.config(image='', text="OTHER", font=self.manual_font,
                                      command=lambda: self.ask_the_button(color, "other", -1, ""))
-        elif indicator == "":
+        elif indicator == "" and (color == "white" and text != "detonate" or batteries > 2):
             self.fourthButton.pack_forget()
             self.selectLabel.config(text="IS THERE A LIT INDICATOR WITH ANY OF THESE LABELS?")
             self.firstButton.config(image='', text="CAR", font=self.manual_font,
@@ -90,17 +95,17 @@ class TheButton:
             self.thirdButton.config(image='', text="OTHER/NONE", font=self.manual_font,
                                     command=lambda: self.ask_the_button(color, text, batteries, "other"))
 
-        elif batteries == -1 and (text == "detonate" or indicator == "frk"):
+        elif batteries == -1 and (text == "detonate" or indicator == "frk" or indicator == ""):
             self.fourthButton.pack(side=LEFT, padx=10)
             self.selectLabel.config(text="HOW MANY BATTERIES ARE IN THE BOMB?")
             self.firstButton.config(image='', text="NONE", font=self.manual_font,
-                                    command=lambda: self.ask_the_button(color, text, 0, ""))
+                                    command=lambda: self.ask_the_button(color, text, 0, indicator))
             self.secondButton.config(image='', text="1 BATTERY", font=self.manual_font,
-                                     command=lambda: self.ask_the_button(color, text, 1, ""))
+                                     command=lambda: self.ask_the_button(color, text, 1, indicator))
             self.thirdButton.config(image='', text="2 BATTERIES", font=self.manual_font,
-                                    command=lambda: self.ask_the_button(color, text, 2, ""))
+                                    command=lambda: self.ask_the_button(color, text, 2, indicator))
             self.fourthButton.config(image='', text="3 OR MORE BATTERIES", font=self.manual_font,
-                                     command=lambda: self.ask_the_button(color, text, 3, ""))
+                                     command=lambda: self.ask_the_button(color, text, 3, indicator))
 
         else:
             self.held_button("")
@@ -115,6 +120,7 @@ class TheButton:
         elif batteries > 2 and indicator == "frk":
             self.held_button("release")
         elif color == "yellow":
+            self.resetButton.place(x=0, y=0)
             self.held_button("")
         elif color == "red" and text == "hold":
             self.held_button("release")

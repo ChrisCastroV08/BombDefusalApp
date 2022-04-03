@@ -3,8 +3,12 @@ from tkinter import *
 
 class SimonSays:
 
-    def back_fun(self):
-        self.simonSaysWin.destroy()
+    def reset(self, num):
+        if num == 0:
+            self.simonSaysWin.destroy()
+        elif num == 1:
+            self.simonSaysWin.destroy()
+            self.__init__(self.root, self.back, self.manual_font)
 
     def __init__(self, root, back, font):
         self.root = root
@@ -12,7 +16,6 @@ class SimonSays:
         self.manual_font = font
         self.simonSaysWin = Toplevel(self.root)
         self.simonSaysWin.title("Simon Says")
-        self.simonSaysWin.protocol("WM_DELETE_WINDOW", self.back_fun)
         self.simonSaysWin.resizable(False, False)
         self.simonSaysWin.config(bg=back)
         self.lftPos = (self.simonSaysWin.winfo_screenwidth() - 1000) / 2
@@ -41,7 +44,9 @@ class SimonSays:
         self.fourthButton.pack(side=LEFT, padx=10)
 
         self.backButton = Button(self.simonSaysWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
-                                 command=lambda: self.back_fun())
+                                 command=lambda: self.reset(0))
+        self.resetButton = Button(self.simonSaysWin, text="RESET", font=("Terminal", 20),
+                                  command=lambda: self.reset(1))
 
         self.backButton.pack(side=BOTTOM)
         self.bomb_info(3)
@@ -52,6 +57,7 @@ class SimonSays:
             self.thirdButton.config(text="1 STRIKE", command=lambda: self.bomb_info(1))
             self.fourthButton.config(text="2 STRIKES", command=lambda: self.bomb_info(2))
         else:
+            self.resetButton.place(x=0, y=0)
             self.selectLabel.config(text="DOES THE SERIAL NUMBER CONTAIN A VOWEL?")
             self.firstButton.config(text="YES", command=lambda: self.simon_says(strikes, True, ""))
             self.secondButton.config(text="NO", command=lambda: self.simon_says(strikes, False, ""))
@@ -70,7 +76,6 @@ class SimonSays:
             self.secondButton.config(text="YELLOW", command=lambda: self.simon_says(strikes, vowel, "y"))
             self.thirdButton.config(text="RED", command=lambda: self.simon_says(strikes, vowel, "r"))
             self.fourthButton.config(text="GREEN", command=lambda: self.simon_says(strikes, vowel, "g"))
-
         elif color == "r":
             self.firstButton.config(text="NEXT", command=lambda: self.simon_says(strikes, vowel, ""))
             self.secondButton.pack_forget()
@@ -151,10 +156,3 @@ class SimonSays:
                     self.selectLabel.config(text="PRESS THE GREEN BUTTON")
                 if strikes == 2:
                     self.selectLabel.config(text="PRESS THE RED BUTTON")
-
-
-
-
-
-
-

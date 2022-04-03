@@ -4,15 +4,18 @@ from tkinter.font import Font
 
 class Wires:
 
-    def back_fun(self):
-        self.wiresWin.destroy()
+    def reset(self, num):
+        if num == 0:
+            self.wiresWin.destroy()
+        elif num == 1:
+            self.wiresWin.destroy()
+            self.__init__(self.root, self.back)
 
     def __init__(self, root, back):
         self.root = root
         self.back = back
         self.wiresWin = Toplevel(self.root)
         self.wiresWin.title("Wires")
-        self.wiresWin.protocol("WM_DELETE_WINDOW", self.back_fun)
         self.wiresWin.resizable(False, False)
         self.wiresWin.config(bg=back)
         self.lftPos = (self.wiresWin.winfo_screenwidth() - 1000) / 2
@@ -42,7 +45,9 @@ class Wires:
         self.fourthButton.pack(side=LEFT, padx=10)
 
         self.backButton = Button(self.wiresWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
-                                 command=lambda: self.back_fun())
+                                 command=lambda: self.reset(0))
+        self.resetButton = Button(self.wiresWin, text="RESET", font=("Terminal", 20),
+                                  command=lambda: self.reset(1))
 
         self.backButton.pack(side=BOTTOM)
 
@@ -53,7 +58,6 @@ class Wires:
             family="Terminal",
             size=20)
         if num_wires == 0:
-            self.backButton.config(text="BACK TO\nMODULE SELECT", command=lambda: self.back_fun())
             self.selectLabel.config(text="HOW MANY WIRES ARE THERE?")
             self.thirdButton.pack(side=LEFT, padx=10)
             self.fourthButton.pack(side=LEFT, padx=10)
@@ -63,7 +67,7 @@ class Wires:
             self.fourthButton.config(text="6 WIRES", font=manual_font, command=lambda: self.wires_com(6))
 
         else:
-            self.backButton.config(text="BACK TO\nWIRE SELECTION", command=lambda: self.wires_com(0))
+            self.resetButton.place(x=0, y=0)
             self.thirdButton.pack_forget()
             self.fourthButton.pack_forget()
             if num_wires == 3 or num_wires == 4:
@@ -107,13 +111,13 @@ class Wires:
             elif wires == 4:
                 if num == 1:
                     self.selectLabel.config(text="IS THERE MORE THAN 1 RED WIRE?")
-                    self.firstButton.config(command=lambda: self.yes_no_wires(True, 4, 2))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, 2))
+                    self.firstButton.config(command=lambda: self.yes_no_wires(True, 4, num + 1))
+                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num + 1))
 
                 elif num == 2:
                     self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?")
                     self.firstButton.config(command=lambda: self.cut_wire("LAST RED"))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, 2))
+                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num))
 
             # FIVE WIRES
             elif wires == 5:
@@ -187,5 +191,4 @@ class Wires:
     def cut_wire(self, string):
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
-        self.backButton.config(text="BACK TO\nMODULE SELECT", command=lambda: self.back_fun())
         self.selectLabel.config(text="CUT THE " + string + " WIRE")
