@@ -119,7 +119,7 @@ class TheButton:
             self.held_button("")
         elif batteries > 2 and indicator == "frk":
             self.held_button("release")
-        elif color == "yellow":
+        elif color == "yellow" and batteries != -1 and indicator != "":
             self.resetButton.place(x=0, y=0)
             self.held_button("")
         elif color == "red" and text == "hold":

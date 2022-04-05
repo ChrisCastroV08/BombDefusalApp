@@ -27,7 +27,7 @@ class WhosOnFirst:
                                text="ON THE SUBJECT OF WHO'S ON FIRST")
         self.selectLabel = Label(self.whoOnFirstWin, font=self.manual_font, fg="white", bg=back,
                                  text="WHAT WORD DOES THE DISPLAY SAYS?")
-        self.answerLabel = Label(self.whoOnFirstWin, bg=back)
+        self.answerLabel = Label(self.whoOnFirstWin, bg=back, fg="white", font=self.manual_font)
         self.topButtons = Frame(self.whoOnFirstWin, bg=back)
         self.bottomButtons = Frame(self.whoOnFirstWin, bg=back)
         self.topButtons2 = Frame(self.whoOnFirstWin, bg=back)
@@ -137,12 +137,12 @@ class WhosOnFirst:
         self.word27 = Button(self.bottomButtons2, text=step1[26], font=self.manual_font, command=lambda: self.select(1))
         self.word28 = Button(self.bottomButtons2, text=step1[27], font=self.manual_font, command=lambda: self.select(5))
 
-        self.pack_buttons = [self.word1, self.word2, self.word3, self.word4, self.word5, self.word6, self.word7,
-                             self.word8, self.word9, self.word10, self.word11, self.word12, self.word13, self.word14,
-                             self.word15, self.word16, self.word17, self.word18, self.word19, self.word20, self.word21,
-                             self.word22, self.word23, self.word24, self.word25, self.word26, self.word27, self.word28]
-        for i in range(len(self.pack_buttons)):
-            self.pack_buttons[i].pack(side=LEFT, padx=10)
+        self.buttons = [self.word1, self.word2, self.word3, self.word4, self.word5, self.word6, self.word7,
+                        self.word8, self.word9, self.word10, self.word11, self.word12, self.word13, self.word14,
+                        self.word15, self.word16, self.word17, self.word18, self.word19, self.word20, self.word21,
+                        self.word22, self.word23, self.word24, self.word25, self.word26, self.word27, self.word28]
+        for i in range(len(self.buttons)):
+            self.buttons[i].pack(side=LEFT, padx=10)
 
         self.backButton = Button(self.whoOnFirstWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
@@ -153,48 +153,53 @@ class WhosOnFirst:
 
     def select(self, display):
         self.resetButton.place(x=0, y=0)
-        step2 = ["READY", "FIRST", "NO", "BLANK", "NOTHING", "YES", "WHAT",
-                 'UHHH', 'LEFT', 'RIGHT', 'MIDDLE', 'OKAY', 'WAIT', 'PRESS',
-                 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR', "U", 'UH HUH',
-                 "UH UH", "WHAT?", "DONE", "NEXT", "HOLD", "SURE", "LIKE"]
+
         pos = ["TOP LEFT", "TOP RIGHT", "MIDDLE LEFT", "MIDDLE RIGHT", "BOTTOM LEFT", "BOTTOM RIGHT"]
         self.selectLabel.config(text="NOW TELL THE DEFUSER TO LOOK AT THE \n"
                                      + pos[display] + " BUTTON AND SELECT THE WORD OF THAT BUTTON")
 
-        for i in range(len(step2)):
-            self.pack_buttons[i].config(text=step2[i])
-        self.word1.config(command=lambda: self.word_list(0))
-        self.word2.config(command=lambda: self.word_list(1))
-        self.word3.config(command=lambda: self.word_list(2))
-        self.word4.config(command=lambda: self.word_list(3))
-        self.word5.config(command=lambda: self.word_list(4))
-        self.word6.config(command=lambda: self.word_list(5))
-        self.word7.config(command=lambda: self.word_list(6))
-        self.word8.config(command=lambda: self.word_list(7))
-        self.word9.config(command=lambda: self.word_list(8))
-        self.word10.config(command=lambda: self.word_list(9))
-        self.word11.config(command=lambda: self.word_list(10))
-        self.word12.config(command=lambda: self.word_list(11))
-        self.word13.config(command=lambda: self.word_list(12))
-        self.word14.config(command=lambda: self.word_list(13))
-        self.word15.config(command=lambda: self.word_list(14))
-        self.word16.config(command=lambda: self.word_list(15))
-        self.word17.config(command=lambda: self.word_list(16))
-        self.word18.config(command=lambda: self.word_list(17))
-        self.word19.config(command=lambda: self.word_list(18))
-        self.word20.config(command=lambda: self.word_list(19))
-        self.word21.config(command=lambda: self.word_list(20))
-        self.word22.config(command=lambda: self.word_list(21))
-        self.word23.config(command=lambda: self.word_list(22))
-        self.word24.config(command=lambda: self.word_list(23))
-        self.word25.config(command=lambda: self.word_list(24))
-        self.word26.config(command=lambda: self.word_list(25))
-        self.word27.config(command=lambda: self.word_list(26))
-        self.word28.config(command=lambda: self.word_list(27))
+        but_config = [("READY", lambda: self.word_list(0)),
+                      ("FIRST", lambda: self.word_list(1)),
+                      ("NO", lambda: self.word_list(2)),
+                      ("BLANK", lambda: self.word_list(3)),
+                      ("NOTHING", lambda: self.word_list(4)),
+                      ("YES", lambda: self.word_list(5)),
+                      ("WHAT", lambda: self.word_list(6)),
+                      ("UHHH", lambda: self.word_list(7)),
+                      ("LEFT", lambda: self.word_list(8)),
+                      ("RIGHT", lambda: self.word_list(9)),
+                      ("MIDDLE", lambda: self.word_list(10)),
+                      ("OKAY", lambda: self.word_list(11)),
+                      ("WAIT", lambda: self.word_list(12)),
+                      ("PRESS", lambda: self.word_list(13)),
+                      ("YOU", lambda: self.word_list(14)),
+                      ("YOU ARE", lambda: self.word_list(15)),
+                      ("YOUR", lambda: self.word_list(16)),
+                      ("YOU'RE", lambda: self.word_list(17)),
+                      ("UR", lambda: self.word_list(18)),
+                      ("U", lambda: self.word_list(19)),
+                      ("UH HUH", lambda: self.word_list(20)),
+                      ("UH UH", lambda: self.word_list(21)),
+                      ("WHAT?", lambda: self.word_list(22)),
+                      ("DONE", lambda: self.word_list(23)),
+                      ("NEXT", lambda: self.word_list(24)),
+                      ("HOLD", lambda: self.word_list(25)),
+                      ("SURE", lambda: self.word_list(26)),
+                      ("LIKE", lambda: self.word_list(27))]
+
+        i = 0
+        for btn in but_config:
+            self.buttons[i].config(text=btn[0], command=btn[1])
+            self.buttons[i].pack(side=LEFT, padx=10)
+            i = i + 1
 
     def word_list(self, list_num):
         self.selectLabel.config(text="NOW SAY ALL THESE WORDS FROM LEFT TO RIGHT\n"
                                      "AND PRESS THE FIRST ONE THAT APPEARS")
+        step2 = ["READY", "FIRST", "NO", "BLANK", "NOTHING", "YES", "WHAT",
+                 'UHHH', 'LEFT', 'RIGHT', 'MIDDLE', 'OKAY', 'WAIT', 'PRESS',
+                 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR', "U", 'UH HUH',
+                 "UH UH", "WHAT?", "DONE", "NEXT", "HOLD", "SURE", "LIKE"]
         self.answerLabel.pack()
         self.topButtons.pack_forget()
         self.topButtons2.pack_forget()
@@ -202,13 +207,14 @@ class WhosOnFirst:
         self.bottomButtons2.pack_forget()
         images = [self.s1image, self.s2image, self.s3image, self.s4image, self.s5image, self.s6image, self.s7image,
                   self.s8image, self.s9image, self.s10image, self.s11image, self.s12image, self.s13image, self.s14image,
-                  self.s15image, self.s16image, self.s17image, self.s18image, self.s19image, self.s20image, self.s21image,
-                  self.s22image, self.s23image, self.s24image, self.s25image, self.s26image, self.s27image, self.s28image]
+                  self.s15image, self.s16image, self.s17image, self.s18image, self.s19image, self.s20image,
+                  self.s21image,
+                  self.s22image, self.s23image, self.s24image, self.s25image, self.s26image, self.s27image,
+                  self.s28image]
         for i in range(len(images)):
             if list_num == i:
-                self.answerLabel.config(image=images[i])
+                self.answerLabel.config(compound=BOTTOM, text="SELECTED " + step2[i], image=images[i])
                 break
-
 
     def img_crop(self, y):
         left = 0

@@ -4,7 +4,9 @@ from KTaNEBombDefusalApp.Keypad import *
 from KTaNEBombDefusalApp.SimonSays import *
 from KTaNEBombDefusalApp.WhosOnFirst import *
 from KTaNEBombDefusalApp.Memory import *
+from KTaNEBombDefusalApp.MorseCode import *
 from KTaNEBombDefusalApp.ComplexWires import *
+from KTaNEBombDefusalApp.WireSequences import *
 
 back = "#8f1c0a"
 
@@ -15,11 +17,12 @@ class MainMenu:
         self.master.title("BombDefuseApp")
         self.master.resizable(False, False)
         self.master.config(bg=back)
-        self.lftPos = (self.master.winfo_screenwidth() - 1150) / 2
+        self.lftPos = (self.master.winfo_screenwidth() - 1000) / 2
         self.topPos = (self.master.winfo_screenheight() - 700) / 2
-        self.master.geometry("%dx%d+%d+%d" % (1150, 700, self.lftPos, self.topPos))
+        self.master.geometry("%dx%d+%d+%d" % (1000, 700, self.lftPos, self.topPos))
 
         self.manual_font = Font(family="Terminal", size=20)
+
         self.wires = PhotoImage(file="Images/Wires.png")
         self.theButton = PhotoImage(file="Images/TheButton.png")
         self.keypad = PhotoImage(file="Images/Keypad.png")
@@ -28,51 +31,57 @@ class MainMenu:
         self.memory = PhotoImage(file="Images/Memory.png")
         self.morseCode = PhotoImage(file="Images/MorseCode.png")
         self.complexWires = PhotoImage(file="Images/ComplexWires.png")
+        self.wireSequences = PhotoImage(file="Images/WireSequences.png")
 
         self.nameLabel = Label(self.master, font=("Terminal", 25), fg="white", bg=back,
                                text="KEEP TALKING AND NOBODY EXPLODES\n BOMB DEFUSE APP")
         self.selectLabel = Label(self.master, font=("Terminal", 20), fg="white", bg=back,
                                  text="SELECT A MODULE TO DEFUSE")
-        self.topButtons = Frame(self.master, bg=back)
-        self.topLabels = Frame(self.master, bg=back)
-        self.bottomButtons = Frame(self.master, bg=back)
-        self.bottomLabels = Frame(self.master, bg=back)
+
+        self.firstFrame = Frame(self.master, bg=back)
+        self.secondFrame = Frame(self.master, bg=back)
+        self.thirdFrame = Frame(self.master, bg=back)
+        self.fourthFrame = Frame(self.master, bg=back)
+        self.fifthFrame = Frame(self.master, bg=back)
+        self.sixthFrame = Frame(self.master, bg=back)
 
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
+        pad = 20
+        self.firstFrame.pack(ipadx=20)
+        self.firstFrame.pack(side=LEFT, padx=5)
+        self.secondFrame.pack(side=LEFT, padx=pad)
+        self.thirdFrame.pack(side=LEFT, padx=pad)
+        self.fourthFrame.pack(side=LEFT, padx=pad)
+        self.fifthFrame.pack(side=LEFT, padx=pad)
+        self.sixthFrame.pack(side=LEFT, padx=pad)
 
-        self.topButtons.pack()
-        self.topLabels.pack(pady=5)
-        self.bottomButtons.pack()
-        self.bottomLabels.pack()
+        button_info = [
+            ("button", self.firstFrame, self.wires, lambda: self.module(0), TOP),
+            ("label", self.firstFrame, "WIRES\n ", TOP),
+            ("button", self.secondFrame, self.theButton, lambda: self.module(1), TOP),
+            ("label", self.secondFrame, "THE\nBUTTON", TOP),
+            ("button", self.thirdFrame, self.keypad, lambda: self.module(2), TOP),
+            ("label", self.thirdFrame, "KEYPAD\n ", TOP),
+            ("button", self.fourthFrame, self.simonSays, lambda: self.module(3), TOP),
+            ("label", self.fourthFrame, "SIMON\nSAYS", TOP),
+            ("button", self.fifthFrame, self.whosOnFirst, lambda: self.module(4), TOP),
+            ("label", self.fifthFrame, "WHO'S ON\nFIRST", TOP),
+            ("button", self.sixthFrame, self.memory, lambda: self.module(5), TOP),
+            ("label", self.sixthFrame, "MEMORY\n ", TOP),
+            ("button", self.firstFrame, self.morseCode, lambda: self.module(6), TOP),
+            ("label", self.firstFrame, "MORSE\nCODE", TOP),
+            ("button", self.secondFrame, self.complexWires, lambda: self.module(7), TOP),
+            ("label", self.secondFrame, "COMPLEX\nWIRES", TOP),
+            ("button", self.thirdFrame, self.wireSequences, lambda: self.module(8), TOP),
+            ("label", self.thirdFrame, "WIRE\nSEQUENCES", TOP)
+        ]
 
-        Button(self.topButtons, image=self.wires, text="", font=("Terminal", 20), command=lambda: self.module(0)).pack(
-            padx=10, side=LEFT)
-        Button(self.topButtons, image=self.theButton, text="", font=("Terminal", 20),
-               command=lambda: self.module(1)).pack(padx=10, side=LEFT)
-        Button(self.topButtons, image=self.keypad, text="", font=("Terminal", 20),
-               command=lambda: self.module(2)).pack(padx=10, side=LEFT)
-        Button(self.topButtons, image=self.simonSays, text="", font=("Terminal", 20),
-               command=lambda: self.module(3)).pack(padx=10, side=LEFT)
-        Button(self.topButtons, image=self.whosOnFirst, text="", font=("Terminal", 20),
-               command=lambda: self.module(4)).pack(padx=15, side=LEFT)
-        Button(self.topButtons, image=self.memory, text="", font=("Terminal", 20),
-               command=lambda: self.module(5)).pack(padx=10, side=LEFT)
-        Button(self.topButtons, image=self.morseCode, text="", font=("Terminal", 20),
-               command=lambda: self.module(6)).pack(padx=10, side=LEFT)
-        Button(self.topButtons, image=self.complexWires, text="", font=("Terminal", 20),
-               command=lambda: self.module(7)).pack(padx=25, side=LEFT)
-
-        Label(self.topLabels, text="WIRES", fg='white', font=self.manual_font, bg=back).pack(padx=30, side=LEFT)
-        Label(self.topLabels, text="THE\nBUTTON", fg='white', font=self.manual_font, bg=back).pack(padx=15, side=LEFT)
-        Label(self.topLabels, text="KEYPAD", fg='white', font=self.manual_font, bg=back).pack(padx=20, side=LEFT)
-        Label(self.topLabels, text="SIMON\nSAYS", fg='white', font=self.manual_font, bg=back).pack(padx=10, side=LEFT)
-        Label(self.topLabels, text="WHO'S ON\nFIRST", fg='white',
-              font=self.manual_font, bg=back).pack(padx=0, side=LEFT)
-        Label(self.topLabels, text="MEMORY", fg='white', font=self.manual_font, bg=back).pack(padx=20, side=LEFT)
-        Label(self.topLabels, text="MORSE\nCODE", fg='white', font=self.manual_font, bg=back).pack(padx=10, side=LEFT)
-        Label(self.topLabels, text="COMPLICATED\nWIRES", fg='white',
-              font=self.manual_font, bg=back).pack(padx=10, side=LEFT)
+        for info in button_info:
+            if info[0] == "button":
+                Button(info[1], image=info[2], command=info[3]).pack(side=info[4])
+            else:
+                Label(info[1], text=info[2], fg='white', font=self.manual_font, bg=back).pack(side=info[3])
 
     def module(self, num):
         if num == 0:
@@ -87,8 +96,12 @@ class MainMenu:
             WhosOnFirst(self.master, back, self.manual_font)
         elif num == 5:
             Memory(self.master, back, self.manual_font)
+        elif num == 6:
+            MorseCode(self.master, back, self.manual_font)
         elif num == 7:
             ComplexWires(self.master, back, self.manual_font)
+        elif num == 8:
+            WireSequences(self.master, back, self.manual_font)
         else:
             print("No valid module")
 

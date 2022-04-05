@@ -38,11 +38,6 @@ class ComplexWires:
         self.thirdButton = Button(self.bottomButtons, font=self.manual_font)
         self.fourthButton = Button(self.bottomButtons, font=self.manual_font)
 
-        self.firstButton.pack(side=LEFT, padx=10)
-        self.secondButton.pack(side=LEFT, padx=10)
-        self.thirdButton.pack(side=LEFT, padx=10)
-        self.fourthButton.pack(side=LEFT, padx=10)
-
         self.backButton = Button(self.complexWiresWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
         self.resetButton = Button(self.complexWiresWin, text="RESET", font=("Terminal", 20),
@@ -52,8 +47,13 @@ class ComplexWires:
         self.wire_info("", -1, -1)
 
     def wire_info(self, color, led, star):
+        self.firstButton.pack(side=LEFT, padx=10)
+        self.secondButton.pack(side=LEFT, padx=10)
+        self.thirdButton.pack(side=LEFT, padx=10)
+        self.fourthButton.pack(side=LEFT, padx=10)
+
         if color == "":
-            self.selectLabel.config(text="WHAT COLORING DOES THE WIRE HAVE?")
+            self.selectLabel.config(text="DOES THE WIRE HAVE ANY OF THESE COLORINGS?")
             self.firstButton.config(image='', text="BLUE COLORING", font=self.manual_font,
                                     command=lambda: self.wire_info("b", led, star))
             self.secondButton.config(image='', text="RED COLORING", font=self.manual_font,
@@ -73,14 +73,20 @@ class ComplexWires:
                                      command=lambda: self.wire_info(color, False, star))
         elif star == -1:
             self.selectLabel.config(text="IS THERE A STAR ON THE\nBOTTOM OF THE WIRE?")
+            self.fourthButton.pack_forget()
+            self.thirdButton.pack_forget()
             self.firstButton.config(image='', text="YES", font=self.manual_font,
-                                    command=lambda: self.ask_wires(color, led, True))
+                                    command=lambda: self.wire_info(color, led, True))
             self.secondButton.config(image='', text="NO", font=self.manual_font,
-                                     command=lambda: self.ask_wires(color, led, False))
+                                     command=lambda: self.wire_info(color, led, False))
+        else:
+            self.ask_wires(color, led, star)
 
     def cut_wire(self, cut):
-        self.topButtons.pack_forget()
-        self.bottomButtons.pack_forget()
+        self.secondButton.pack_forget()
+        self.thirdButton.pack_forget()
+        self.fourthButton.pack_forget()
+        self.firstButton.config(text="NEXT", command=lambda: self.wire_info("", -1, -1))
         if cut:
             self.selectLabel.config(text="CUT THE WIRE")
         else:
@@ -153,13 +159,3 @@ class ComplexWires:
                 self.ask_parallel()
             elif led and star:
                 self.cut_wire(False)
-
-
-
-
-
-
-
-
-
-
