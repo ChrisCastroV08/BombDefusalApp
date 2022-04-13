@@ -58,7 +58,6 @@ class WireSequences:
 
     def ask_wires(self, color, letter, red, blue, black):
         self.resetButton.place(x=0, y=0)
-
         if letter == "":
             self.selectLabel.config(text="WHAT IS THAT WIRE CONNECTED TO?")
             self.firstButton.config(text="A", command=lambda: self.ask_wires(color, "A", red, blue, black))
@@ -71,15 +70,15 @@ class WireSequences:
                 self.cut_wire(True, red, blue, black)
             elif red == 3 and letter == "A":
                 self.cut_wire(True, red, blue, black)
-            elif red == 4 and (letter == "A" or "C"):
+            elif red == 4 and letter != "B":
                 self.cut_wire(True, red, blue, black)
             elif red == 5 and letter == "B":
                 self.cut_wire(True, red, blue, black)
-            elif red == 6 and (letter == "A" or "C"):
+            elif red == 6 and letter != "B":
                 self.cut_wire(True, red, blue, black)
-            elif red == 7 and (letter == "A" or "B" or "C"):
+            elif red == 7:
                 self.cut_wire(True, red, blue, black)
-            elif red == 8 and (letter == "A" or "B"):
+            elif red == 8 and letter != "C":
                 self.cut_wire(True, red, blue, black)
             elif red == 9 and letter == "B":
                 self.cut_wire(True, red, blue, black)
@@ -88,7 +87,7 @@ class WireSequences:
         elif color == "blue":
             if blue == 1 and letter == "B":
                 self.cut_wire(True, red, blue, black)
-            elif blue == 2 and (letter == "A" or "C"):
+            elif blue == 2 and letter != "B":
                 self.cut_wire(True, red, blue, black)
             elif blue == 3 and letter == "B":
                 self.cut_wire(True, red, blue, black)
@@ -96,30 +95,30 @@ class WireSequences:
                 self.cut_wire(True, red, blue, black)
             elif blue == 5 and letter == "B":
                 self.cut_wire(True, red, blue, black)
-            elif blue == 6 and (letter == "B" or "C"):
+            elif blue == 6 and letter != "A":
                 self.cut_wire(True, red, blue, black)
             elif blue == 7 and letter == "C":
                 self.cut_wire(True, red, blue, black)
-            elif blue == 8 and (letter == "A" or "C"):
+            elif blue == 8 and letter != "B":
                 self.cut_wire(True, red, blue, black)
             elif blue == 9 and letter == "A":
                 self.cut_wire(True, red, blue, black)
             else:
                 self.cut_wire(False, red, blue, black)
         elif color == "black":
-            if black == 1 and (letter == "A" or "B" or "C"):
+            if black == 1:
                 self.cut_wire(True, red, blue, black)
-            elif black == 2 and (letter == "A" or "C"):
+            elif black == 2 and letter != "B":
                 self.cut_wire(True, red, blue, black)
             elif black == 3 and letter == "B":
                 self.cut_wire(True, red, blue, black)
-            elif black == 4 and (letter == "A" or "C"):
+            elif black == 4 and letter != "B":
                 self.cut_wire(True, red, blue, black)
             elif black == 5 and letter == "B":
                 self.cut_wire(True, red, blue, black)
-            elif black == 6 and (letter == "B" or "C"):
+            elif black == 6 and letter != "A":
                 self.cut_wire(True, red, blue, black)
-            elif black == 7 and (letter == "A" or "B"):
+            elif black == 7 and letter != "C":
                 self.cut_wire(True, red, blue, black)
             elif black == 8 and letter == "C":
                 self.cut_wire(True, red, blue, black)

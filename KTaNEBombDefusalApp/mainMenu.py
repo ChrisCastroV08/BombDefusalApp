@@ -7,6 +7,8 @@ from KTaNEBombDefusalApp.Memory import *
 from KTaNEBombDefusalApp.MorseCode import *
 from KTaNEBombDefusalApp.ComplexWires import *
 from KTaNEBombDefusalApp.WireSequences import *
+from KTaNEBombDefusalApp.Mazes import *
+from KTaNEBombDefusalApp.Passwords import *
 
 back = "#8f1c0a"
 
@@ -32,6 +34,8 @@ class MainMenu:
         self.morseCode = PhotoImage(file="Images/MorseCode.png")
         self.complexWires = PhotoImage(file="Images/ComplexWires.png")
         self.wireSequences = PhotoImage(file="Images/WireSequences.png")
+        self.maze = PhotoImage(file="Images/Maze.png")
+        self.password = PhotoImage(file="Images/Passwords.png")
 
         self.nameLabel = Label(self.master, font=("Terminal", 25), fg="white", bg=back,
                                text="KEEP TALKING AND NOBODY EXPLODES\n BOMB DEFUSE APP")
@@ -48,8 +52,7 @@ class MainMenu:
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
         pad = 20
-        self.firstFrame.pack(ipadx=20)
-        self.firstFrame.pack(side=LEFT, padx=5)
+        self.firstFrame.pack(side=LEFT, padx=5, ipadx=20)
         self.secondFrame.pack(side=LEFT, padx=pad)
         self.thirdFrame.pack(side=LEFT, padx=pad)
         self.fourthFrame.pack(side=LEFT, padx=pad)
@@ -70,11 +73,15 @@ class MainMenu:
             ("button", self.sixthFrame, self.memory, lambda: self.module(5), TOP),
             ("label", self.sixthFrame, "MEMORY\n ", TOP),
             ("button", self.firstFrame, self.morseCode, lambda: self.module(6), TOP),
-            ("label", self.firstFrame, "MORSE\nCODE", TOP),
+            ("label", self.firstFrame, "MORSE\nCODE\n", TOP),
             ("button", self.secondFrame, self.complexWires, lambda: self.module(7), TOP),
-            ("label", self.secondFrame, "COMPLEX\nWIRES", TOP),
+            ("label", self.secondFrame, "COMPLEX\nWIRES\n", TOP),
             ("button", self.thirdFrame, self.wireSequences, lambda: self.module(8), TOP),
-            ("label", self.thirdFrame, "WIRE\nSEQUENCES", TOP)
+            ("label", self.thirdFrame, "WIRE\nSEQUENCES\n", TOP),
+            ("button", self.fourthFrame, self.maze, lambda: self.module(9), TOP),
+            ("label", self.fourthFrame, "MAZES\n\n", TOP),
+            ("button", self.fifthFrame, self.password, lambda: self.module(10), TOP),
+            ("label", self.fifthFrame, "PASSWORDS\n\n", TOP)
         ]
 
         for info in button_info:
@@ -102,6 +109,10 @@ class MainMenu:
             ComplexWires(self.master, back, self.manual_font)
         elif num == 8:
             WireSequences(self.master, back, self.manual_font)
+        elif num == 9:
+            Mazes(self.master, back, self.manual_font)
+        elif num == 10:
+            Passwords(self.master, back, self.manual_font)
         else:
             print("No valid module")
 

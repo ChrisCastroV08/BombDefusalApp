@@ -115,14 +115,16 @@ class Wires:
                     self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num + 1))
 
                 elif num == 2:
-                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?")
+                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?\n"
+                                                 "ODDS=(1,3,5,7,9)")
                     self.firstButton.config(command=lambda: self.cut_wire("LAST RED"))
                     self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num))
 
             # FIVE WIRES
             elif wires == 5:
                 if num == 1:
-                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?")
+                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?\n"
+                                                 "ODDS=(1,3,5,7,9)")
                     self.firstButton.config(command=lambda: self.cut_wire("FOURTH"))
                     self.secondButton.config(command=lambda: self.yes_no_wires(False, 5, 1))
                 if num == 2:
@@ -179,7 +181,8 @@ class Wires:
             # SIX WIRES
             elif wires == 6:
                 if num == 1:
-                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?")
+                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?\n"
+                                                 "ODDS=(1,3,5,7,9)")
                     self.firstButton.config(command=lambda: self.cut_wire("THIRD"))
                     self.secondButton.config(command=lambda: self.yes_no_wires(False, 6, 2))
 

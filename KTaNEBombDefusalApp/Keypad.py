@@ -3,12 +3,10 @@ from tkinter.font import Font
 from PIL import ImageTk, Image
 
 but1state, but2state, but3state, but4state, but5state, but6state, but7state, but8state, \
-but9state, but10state, but11state, but12state, but13state, but14state, but15state, but16state, \
-but17state, but18state, but19state, but20state, but21state, but22state, but23state, but24state, \
-but25state, but26state, but27state = False, False, False, False, False, False, False, \
-                                     False, False, False, False, False, False, False, False, False,\
-                                     False, False, False, False, False, False, False, False, False,\
-                                     False, False
+ but9state, but10state, but11state, but12state, but13state, but14state, but15state, but16state, \
+ but17state, but18state, but19state, but20state, but21state, but22state, but23state, but24state, \
+ but25state, but26state, but27state = (False for i in range(27))
+
 
 def clear():
     global but1state, but2state, but3state, but4state, \
@@ -18,13 +16,11 @@ def clear():
         but17state, but18state, but19state, but20state, \
         but21state, but22state, but23state, but24state, \
         but25state, but26state, but27state
+
     but1state, but2state, but3state, but4state, but5state, but6state, but7state, but8state, \
-    but9state, but10state, but11state, but12state, but13state, but14state, but15state, but16state, \
-    but17state, but18state, but19state, but20state, but21state, but22state, but23state, but24state, \
-    but25state, but26state, but27state = False, False, False, False, False, False, False, \
-                                         False, False, False, False, False, False, False, False, False, \
-                                         False, False, False, False, False, False, False, False, False, \
-                                         False, False
+      but9state, but10state, but11state, but12state, but13state, but14state, but15state, but16state, \
+      but17state, but18state, but19state, but20state, but21state, but22state, but23state, but24state, \
+      but25state, but26state, but27state = (False for i in range(27))
 
 
 class Keypad:

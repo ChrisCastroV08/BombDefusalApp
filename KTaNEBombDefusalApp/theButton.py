@@ -26,6 +26,8 @@ class TheButton:
         self.manual_font = Font(
             family="Terminal",
             size=20)
+        self.batteries = -1
+        self.label = ""
 
         self.nameLabel = Label(self.theButtonWind, font=("Terminal", 25), fg="white", bg=back,
                                text="ON THE SUBJECT OF THE BUTTON")
@@ -85,17 +87,7 @@ class TheButton:
                                     command=lambda: self.ask_the_button(color, "hold", -1, ""))
             self.fourthButton.config(image='', text="OTHER", font=self.manual_font,
                                      command=lambda: self.ask_the_button(color, "other", -1, ""))
-        elif indicator == "" and (color == "white" and text != "detonate" or batteries > 2):
-            self.fourthButton.pack_forget()
-            self.selectLabel.config(text="IS THERE A LIT INDICATOR WITH ANY OF THESE LABELS?")
-            self.firstButton.config(image='', text="CAR", font=self.manual_font,
-                                    command=lambda: self.ask_the_button(color, text, batteries, "car"))
-            self.secondButton.config(image='', text="FRK", font=self.manual_font,
-                                     command=lambda: self.ask_the_button(color, text, batteries, "frk"))
-            self.thirdButton.config(image='', text="OTHER/NONE", font=self.manual_font,
-                                    command=lambda: self.ask_the_button(color, text, batteries, "other"))
-
-        elif batteries == -1 and (text == "detonate" or indicator == "frk" or indicator == ""):
+        elif (batteries == -1) and (text == "detonate" or indicator == "frk" or indicator == ""):
             self.fourthButton.pack(side=LEFT, padx=10)
             self.selectLabel.config(text="HOW MANY BATTERIES ARE IN THE BOMB?")
             self.firstButton.config(image='', text="NONE", font=self.manual_font,
@@ -107,27 +99,37 @@ class TheButton:
             self.fourthButton.config(image='', text="3 OR MORE BATTERIES", font=self.manual_font,
                                      command=lambda: self.ask_the_button(color, text, 3, indicator))
 
+        elif (indicator == "") and (color == "white" or batteries > 2):
+            self.fourthButton.pack_forget()
+            self.selectLabel.config(text="IS THERE A LIT INDICATOR WITH ANY OF THESE LABELS?")
+            self.firstButton.config(image='', text="CAR", font=self.manual_font,
+                                    command=lambda: self.ask_the_button(color, text, batteries, "car"))
+            self.secondButton.config(image='', text="FRK", font=self.manual_font,
+                                     command=lambda: self.ask_the_button(color, text, batteries, "frk"))
+            self.thirdButton.config(image='', text="OTHER/NONE", font=self.manual_font,
+                                    command=lambda: self.ask_the_button(color, text, batteries, "other"))
+
         else:
-            self.held_button("")
+            self.hold_button("")
 
     def ask_the_button(self, color, text, batteries, indicator):
         if color == "blue" and text == "abort":
-            self.held_button("")
+            self.hold_button("")
         elif text == "detonate" and batteries > 1:
-            self.held_button("release")
+            self.hold_button("release")
         elif color == "white" and indicator == "car":
-            self.held_button("")
+            self.hold_button("")
         elif batteries > 2 and indicator == "frk":
-            self.held_button("release")
+            self.hold_button("release")
         elif color == "yellow" and batteries != -1 and indicator != "":
             self.resetButton.place(x=0, y=0)
-            self.held_button("")
+            self.hold_button("")
         elif color == "red" and text == "hold":
-            self.held_button("release")
+            self.hold_button("release")
         else:
             self.the_button(color, text, batteries, indicator)
 
-    def held_button(self, color):
+    def hold_button(self, color):
         self.thirdButton.pack(padx=10, side=LEFT)
         self.fourthButton.pack(padx=10, side=LEFT)
         self.fifthButton.pack_forget()
@@ -135,13 +137,13 @@ class TheButton:
         if color == "":
             self.selectLabel.config(text="HOLD DOWN THE BUTTON AND\nSELECT THE COLOR OF THE STRIP ON THE SIDE")
             self.firstButton.config(image='', text="BLUE STRIP", font=self.manual_font,
-                                    command=lambda: self.held_button("blue"))
+                                    command=lambda: self.hold_button("blue"))
             self.secondButton.config(image='', text="WHITE STRIP", font=self.manual_font,
-                                     command=lambda: self.held_button("white"))
+                                     command=lambda: self.hold_button("white"))
             self.thirdButton.config(image='', text="YELLOW STRIP", font=self.manual_font,
-                                    command=lambda: self.held_button("yellow"))
+                                    command=lambda: self.hold_button("yellow"))
             self.fourthButton.config(image='', text="OTHER", font=self.manual_font,
-                                     command=lambda: self.held_button("any"))
+                                     command=lambda: self.hold_button("any"))
         else:
             self.topButtons.pack_forget()
             self.bottomButtons.pack_forget()

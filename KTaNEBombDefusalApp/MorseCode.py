@@ -1,6 +1,21 @@
 from tkinter import *
 
 
+# BIG THANKS TO USER ALBRECHT FOR THE IMPLEMENTATION OF THIS MORSE DECODER
+def morse(txt):
+    encrypt = {'A': '.-', 'B': '-...', 'C': '-.-.',
+               'D': '-..', 'E': '.', 'F': '..-.',
+               'G': '--.', 'H': '....', 'I': '..',
+               'J': '.---', 'K': '-.-', 'L': '.-..',
+               'M': '--', 'N': '-.', 'O': '---',
+               'P': '.--.', 'Q': '--.-', 'R': '.-.',
+               'S': '...', 'T': '-', 'U': '..-',
+               'V': '...-', 'W': '.--', 'X': '-..-',
+               'Y': '-.--', 'Z': '--..', ' ': '.....'}
+    decrypt = {v: k for k, v in encrypt.items()}
+    return ''.join(decrypt[i] for i in txt.split())
+
+
 class MorseCode:
 
     def reset(self, num):
@@ -127,9 +142,8 @@ class MorseCode:
         word = ""
         if txt != "":
             try:
-                word = self.morse(txt)
+                word = morse(txt)
             except KeyError:
-                print("here")
                 self.selectLabel.config(text="MAKE SURE YOU TYPED\nTHE CORRECT MORSE CODE")
                 self.topButtons.pack_forget()
                 self.bottomButtons.pack_forget()
@@ -163,16 +177,5 @@ class MorseCode:
                                              "\nAND RESPONDS TO THE FREQUENCY 3." + str(info[1][i]) + "MHz")
                 break
 
-    # BIG THANKS TO USER ALBRECHT FOR THE IMPLEMENTATION OF THIS MORSE DECODER
-    def morse(self, txt):
-        encrypt = {'A': '.-', 'B': '-...', 'C': '-.-.',
-                   'D': '-..', 'E': '.', 'F': '..-.',
-                   'G': '--.', 'H': '....', 'I': '..',
-                   'J': '.---', 'K': '-.-', 'L': '.-..',
-                   'M': '--', 'N': '-.', 'O': '---',
-                   'P': '.--.', 'Q': '--.-', 'R': '.-.',
-                   'S': '...', 'T': '-', 'U': '..-',
-                   'V': '...-', 'W': '.--', 'X': '-..-',
-                   'Y': '-.--', 'Z': '--..', ' ': '.....'}
-        decrypt = {v: k for k, v in encrypt.items()}
-        return ''.join(decrypt[i] for i in txt.split())
+
+

@@ -26,22 +26,36 @@ class SimonSays:
                                text="ON THE SUBJECT OF SIMON SAYS")
         self.selectLabel = Label(self.simonSaysWin, font=self.manual_font, fg="white", bg=back,
                                  text="HOW MANY STRIKES THE DEFUSER HAS?")
+        self.ansLabel = Label(self.simonSaysWin, font=self.manual_font, fg="white", bg=back)
+
         self.topButtons = Frame(self.simonSaysWin, bg=back)
         self.bottomButtons = Frame(self.simonSaysWin, bg=back)
+        self.bottomButtons2 = Frame(self.simonSaysWin, bg=back)
+        self.label_list = []
+        self.simon_list = []
+        self.info = []
+
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
 
         self.topButtons.pack()
         self.bottomButtons.pack(pady=10)
+        self.bottomButtons2.pack()
+        self.ansLabel.pack()
 
         self.firstButton = Button(self.topButtons, font=self.manual_font)
         self.secondButton = Button(self.topButtons, font=self.manual_font)
         self.thirdButton = Button(self.bottomButtons, font=self.manual_font)
         self.fourthButton = Button(self.bottomButtons, font=self.manual_font)
+        self.fifthButton = Button(self.bottomButtons2, font=self.manual_font, fg="red")
+        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font, fg="green")
 
         self.firstButton.pack(side=LEFT, padx=10)
         self.thirdButton.pack(side=LEFT, padx=10)
         self.fourthButton.pack(side=LEFT, padx=10)
+
+        self.buttons = [self.firstButton, self.secondButton, self.thirdButton, self.fourthButton,
+                        self.fifthButton, self.sixthButton]
 
         self.backButton = Button(self.simonSaysWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
@@ -59,100 +73,122 @@ class SimonSays:
         else:
             self.resetButton.place(x=0, y=0)
             self.selectLabel.config(text="DOES THE SERIAL NUMBER CONTAIN A VOWEL?")
-            self.firstButton.config(text="YES", command=lambda: self.simon_says(strikes, True, ""))
-            self.secondButton.config(text="NO", command=lambda: self.simon_says(strikes, False, ""))
+            self.firstButton.config(text="YES", command=lambda: self.simon_says(strikes, True, True))
+            self.secondButton.config(text="NO", command=lambda: self.simon_says(strikes, False, True))
             self.secondButton.pack(side=LEFT, padx=10)
             self.thirdButton.pack_forget()
             self.fourthButton.pack_forget()
 
-    def simon_says(self, strikes, vowel, color):
-        if color == "":
-            self.firstButton.pack(side=LEFT, padx=10)
-            self.secondButton.pack(side=LEFT, padx=10)
-            self.thirdButton.pack(side=LEFT, padx=10)
-            self.fourthButton.pack(side=LEFT, padx=10)
-            self.selectLabel.config(text="SELECT THE COLOR THAT FLASHES")
-            self.firstButton.config(text="BLUE", command=lambda: self.simon_says(strikes, vowel, "b"))
-            self.secondButton.config(text="YELLOW", command=lambda: self.simon_says(strikes, vowel, "y"))
-            self.thirdButton.config(text="RED", command=lambda: self.simon_says(strikes, vowel, "r"))
-            self.fourthButton.config(text="GREEN", command=lambda: self.simon_says(strikes, vowel, "g"))
-        elif color == "r":
-            self.firstButton.config(text="NEXT", command=lambda: self.simon_says(strikes, vowel, ""))
-            self.secondButton.pack_forget()
-            self.thirdButton.pack_forget()
-            self.fourthButton.pack_forget()
-            if vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE BLUE BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE YELLOW BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE GREEN BUTTON")
+    def word(self, string):
+        if string != "clear":
+            self.label_list.append(string)
+            self.ansLabel.config(text=' - '.join(self.label_list))
+            self.simon_list.append(string)
+        else:
+            self.label_list.clear()
+            self.simon_list.clear()
+            self.ansLabel.config(text='')
 
-            if not vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE BLUE BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE RED BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE YELLOW BUTTON")
+    def simon_says(self, strikes, vowel, first_time):
+        self.simon_list.clear()
+        self.label_list.clear()
+        if first_time:
+            self.info.append(strikes)
+            self.info.append(vowel)
+        self.sixthButton.pack_forget()
+        self.selectLabel.config(text="SELECT ALL THE COLORS THAT FLASHES IN ORDER")
+        but_config = [("BLUE", lambda: self.word("BLUE")),
+                      ("YELLOW", lambda: self.word("YELLOW")),
+                      ("RED", lambda: self.word("RED")),
+                      ("GREEN", lambda: self.word("GREEN")),
+                      ("CLEAR", lambda: self.word("clear")),
+                      ("NEXT", lambda: self.press())]
+        i = 0
+        for btn in but_config:
+            self.buttons[i].config(text=btn[0], command=btn[1])
+            self.buttons[i].pack(side=LEFT, padx=10)
+            i = i + 1
 
-        elif color == "b":
-            self.firstButton.config(text="NEXT", command=lambda: self.simon_says(strikes, vowel, ""))
-            self.secondButton.pack_forget()
-            self.thirdButton.pack_forget()
-            self.fourthButton.pack_forget()
-            if vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE RED BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE GREEN BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE RED BUTTON")
-            if not vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE YELLOW BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE BLUE BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE GREEN BUTTON")
+    def press(self):
+        ans_label = []
+        self.firstButton.pack_forget()
+        self.secondButton.pack_forget()
+        self.thirdButton.pack_forget()
+        self.fourthButton.pack_forget()
+        self.fifthButton.pack_forget()
+        self.ansLabel.config(text="")
+        self.sixthButton.config(command=lambda: self.simon_says(0, False, False))
+        print(self.simon_list)
+        for i in range(len(self.simon_list)):
+            if self.simon_list[i] == "RED":
+                if self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("BLUE")
+                    if self.info[0] == 1:
+                        ans_label.append("YELLOW")
+                    if self.info[0] == 2:
+                        ans_label.append("GREEN")
 
-        elif color == "g":
-            self.firstButton.config(text="NEXT", command=lambda: self.simon_says(strikes, vowel, ""))
-            self.secondButton.pack_forget()
-            self.thirdButton.pack_forget()
-            self.fourthButton.pack_forget()
-            if vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE YELLOW BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE BLUE BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE YELLOW BUTTON")
-            if not vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE GREEN BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE YELLOW BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE BLUE BUTTON")
+                if not self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("BLUE")
+                    if self.info[0] == 1:
+                        ans_label.append("RED")
+                    if self.info[0] == 2:
+                        ans_label.append("YELLOW")
 
-        elif color == "y":
-            self.firstButton.config(text="NEXT", command=lambda: self.simon_says(strikes, vowel, ""))
-            self.secondButton.pack_forget()
-            self.thirdButton.pack_forget()
-            self.fourthButton.pack_forget()
-            if vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE GREEN BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE RED BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE BLUE BUTTON")
-            if not vowel:
-                if strikes == 0:
-                    self.selectLabel.config(text="PRESS THE RED BUTTON")
-                if strikes == 1:
-                    self.selectLabel.config(text="PRESS THE GREEN BUTTON")
-                if strikes == 2:
-                    self.selectLabel.config(text="PRESS THE RED BUTTON")
+            elif self.simon_list[i] == "BLUE":
+                if self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("RED")
+                    if self.info[0] == 1:
+                        ans_label.append("GREEN")
+                    if self.info[0] == 2:
+                        ans_label.append("RED")
+
+                if not self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("YELLOW")
+                    if self.info[0] == 1:
+                        ans_label.append("BLUE")
+                    if self.info[0] == 2:
+                        ans_label.append("GREEN")
+
+            elif self.simon_list[i] == "GREEN":
+                if self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("YELLOW")
+                    if self.info[0] == 1:
+                        ans_label.append("BLUE")
+                    if self.info[0] == 2:
+                        ans_label.append("YELLOW")
+
+                if not self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("GREEN")
+                    if self.info[0] == 1:
+                        ans_label.append("YELLOW")
+                    if self.info[0] == 2:
+                        ans_label.append("BLUE")
+
+            elif self.simon_list[i] == "YELLOW":
+                if self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("GREEN")
+                    if self.info[0] == 1:
+                        ans_label.append("RED")
+                    if self.info[0] == 2:
+                        ans_label.append("BLUE")
+
+                if not self.info[1]:
+                    if self.info[0] == 0:
+                        ans_label.append("RED")
+                    if self.info[0] == 1:
+                        ans_label.append("GREEN")
+                    if self.info[0] == 2:
+                        ans_label.append("RED")
+
+        if len(self.simon_list) != 0:
+            self.selectLabel.config(text="PRESS '" + ', '.join(ans_label) + "' IN THAT ORDER")
+        else:
+            self.selectLabel.config(text="MAKE SURE TO SELECT\nALL THE COLORS IN ORDER")
