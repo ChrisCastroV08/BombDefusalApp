@@ -22,8 +22,6 @@ class Knob:
         self.topPos = (self.knobWin.winfo_screenheight() - 700) / 2
         self.knobWin.geometry("%dx%d+%d+%d" % (1000, 700, self.lftPos, self.topPos))
 
-        self.wires = PhotoImage(file="Images/Wires.png")
-
         self.nameLabel = Label(self.knobWin, font=("Terminal", 25), fg="white", bg=back,
                                text="ON THE SUBJECT OF KNOBS")
         self.selectLabel = Label(self.knobWin, font=("Terminal", 20), fg="white", bg=back,
@@ -74,12 +72,7 @@ class Knob:
             self.selectLabel.config(text="PLACE THE KNOB IN THE {} POSITION,\n"
                                          "RELATIVE TO THE 'UP' LABEL IN THE KNOB".format(leds))
         else:
-            self.check_5_leds("")
-
-    def check_5_leds(self, top_left):
-        if top_left == "":
             self.selectLabel.config(text="IS THE TOP LEFT LED ON?")
             self.topButtons.pack()
             self.firstButton.config(text="YES", command=lambda: self.check_led("RIGHT"))
             self.secondButton.config(text="NO", command=lambda: self.check_led("DOWN"))
-

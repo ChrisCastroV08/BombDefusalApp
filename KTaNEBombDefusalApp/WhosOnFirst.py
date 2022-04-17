@@ -104,7 +104,6 @@ class WhosOnFirst:
                  ['BLANK', 'NO', 'LED', 'LEAD', 'READ', 'RED', 'REED'],
                  ['LEED', 'HOLD ON', 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR'],
                  ["THERE", "THEY'RE", "THEIR", "THEY ARE", "SEE", "C", "CEE"]]
-        look = ["TOP LEFT", "TOP RIGHT", "MIDDLE LEFT", "MIDDLE RIGHT", "BOTTOM LEFT", "BOTTOM RIGHT"]
 
         self.word1, self.word2, self.word3, self.word4, self.word5, self.word6, self.word7 =\
             (Button(self.topButtons, font=self.manual_font, text=step1[0][i]) for i in range(7))
@@ -120,23 +119,29 @@ class WhosOnFirst:
                         self.word15, self.word16, self.word17, self.word18, self.word19, self.word20, self.word21,
                         self.word22, self.word23, self.word24, self.word25, self.word26, self.word27, self.word28]
 
-        but_config = [(lambda: self.select("MIDDLE LEFT")), (lambda: self.select("TOP RIGHT")),
-                      (lambda: self.select("BOTTOM RIGHT")), (lambda: self.select("TOP RIGHT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
-                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT"))]
-        for i in range(len(self.buttons)):
-            self.buttons[i].pack(side=LEFT, padx=10)
+        j = 0
+        for i in step1:
+            for letter in i:
+                if letter in ("YES", "NOTHING", "LED", "THEY ARE"):
+                    self.buttons[j].config(command=lambda: self.select("TOP LEFT"))
 
+                elif letter in ("FIRST", "OKAY", "C"):
+                    self.buttons[j].config(command=lambda: self.select("TOP RIGHT"))
+
+                elif letter in ("YES", "NOTHING", "LED", "THEY ARE"):
+                    self.buttons[j].config(command=lambda: self.select("MIDDLE LEFT"))
+
+                elif letter in ("BLANK", "READ", "RED", "YOU", "YOUR", "YOU'RE", "THEIR"):
+                    self.buttons[j].config(command=lambda: self.select("MIDDLE RIGHT"))
+
+                elif letter in ("      ", "REED", "LEED", "THEY'RE"):
+                    self.buttons[j].config(command=lambda: self.select("BOTTOM LEFT"))
+
+                elif letter in ("DISPLAY", "SAYS", "NO", "LEAD", "HOLD ON", "YOU ARE", "THERE", "CEE"):
+                    self.buttons[j].config(command=lambda: self.select("BOTTOM RIGHT"))
+
+                self.buttons[j].pack(side=LEFT, padx=10)
+                j = j + 1
         self.backButton = Button(self.whoOnFirstWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
         self.resetButton = Button(self.whoOnFirstWin, text="RESET", font=("Terminal", 20),
