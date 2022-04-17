@@ -8,12 +8,13 @@ class SimonSays:
             self.simonSaysWin.destroy()
         elif num == 1:
             self.simonSaysWin.destroy()
-            self.__init__(self.root, self.back, self.manual_font)
+            self.__init__(self.root, self.back, self.manual_font, self.serial)
 
-    def __init__(self, root, back, font):
+    def __init__(self, root, back, manual_font, serial):
         self.root = root
         self.back = back
-        self.manual_font = font
+        self.manual_font = manual_font
+        self.serial = serial
         self.simonSaysWin = Toplevel(self.root)
         self.simonSaysWin.title("Simon Says")
         self.simonSaysWin.resizable(False, False)
@@ -35,6 +36,11 @@ class SimonSays:
         self.simon_list = []
         self.info = []
 
+        for char in self.serial:
+            if char in 'AEIOU':
+                self.vowel = True
+                break
+            self.vowel = False
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
 
@@ -48,7 +54,7 @@ class SimonSays:
         self.thirdButton = Button(self.bottomButtons, font=self.manual_font)
         self.fourthButton = Button(self.bottomButtons, font=self.manual_font)
         self.fifthButton = Button(self.bottomButtons2, font=self.manual_font, fg="red")
-        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font, fg="green")
+        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font, fg="green", state=DISABLED)
 
         self.firstButton.pack(side=LEFT, padx=10)
         self.thirdButton.pack(side=LEFT, padx=10)
@@ -63,21 +69,12 @@ class SimonSays:
                                   command=lambda: self.reset(1))
 
         self.backButton.pack(side=BOTTOM)
-        self.bomb_info(3)
+        self.bomb_info()
 
-    def bomb_info(self, strikes):
-        if strikes == 3:
-            self.firstButton.config(text="NO STRIKES", command=lambda: self.bomb_info(0))
-            self.thirdButton.config(text="1 STRIKE", command=lambda: self.bomb_info(1))
-            self.fourthButton.config(text="2 STRIKES", command=lambda: self.bomb_info(2))
-        else:
-            self.resetButton.place(x=0, y=0)
-            self.selectLabel.config(text="DOES THE SERIAL NUMBER CONTAIN A VOWEL?")
-            self.firstButton.config(text="YES", command=lambda: self.simon_says(strikes, True, True))
-            self.secondButton.config(text="NO", command=lambda: self.simon_says(strikes, False, True))
-            self.secondButton.pack(side=LEFT, padx=10)
-            self.thirdButton.pack_forget()
-            self.fourthButton.pack_forget()
+    def bomb_info(self):
+        self.firstButton.config(text="NO STRIKES", command=lambda: self.simon_says(0, True))
+        self.thirdButton.config(text="1 STRIKE", command=lambda: self.simon_says(1, True))
+        self.fourthButton.config(text="2 STRIKES", command=lambda: self.simon_says(2, True))
 
     def word(self, string):
         if string != "clear":
@@ -88,13 +85,17 @@ class SimonSays:
             self.label_list.clear()
             self.simon_list.clear()
             self.ansLabel.config(text='')
+        if len(self.simon_list) < 1:
+            self.sixthButton.config(state=DISABLED)
+        else:
+            self.sixthButton.config(state=NORMAL)
 
-    def simon_says(self, strikes, vowel, first_time):
+    def simon_says(self, strikes, first_time):
         self.simon_list.clear()
         self.label_list.clear()
         if first_time:
             self.info.append(strikes)
-            self.info.append(vowel)
+            self.info.append(self.vowel)
         self.sixthButton.pack_forget()
         self.selectLabel.config(text="SELECT ALL THE COLORS THAT FLASHES IN ORDER")
         but_config = [("BLUE", lambda: self.word("BLUE")),
@@ -117,8 +118,7 @@ class SimonSays:
         self.fourthButton.pack_forget()
         self.fifthButton.pack_forget()
         self.ansLabel.config(text="")
-        self.sixthButton.config(command=lambda: self.simon_says(0, False, False))
-        print(self.simon_list)
+        self.sixthButton.config(command=lambda: self.simon_says(0, False))
         for i in range(len(self.simon_list)):
             if self.simon_list[i] == "RED":
                 if self.info[1]:
@@ -190,5 +190,4 @@ class SimonSays:
 
         if len(self.simon_list) != 0:
             self.selectLabel.config(text="PRESS '" + ', '.join(ans_label) + "' IN THAT ORDER")
-        else:
-            self.selectLabel.config(text="MAKE SURE TO SELECT\nALL THE COLORS IN ORDER")
+

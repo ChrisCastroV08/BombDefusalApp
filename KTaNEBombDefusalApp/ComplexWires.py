@@ -8,12 +8,15 @@ class ComplexWires:
             self.complexWiresWin.destroy()
         elif num == 1:
             self.complexWiresWin.destroy()
-            self.__init__(self.root, self.back, self.manual_font)
+            self.__init__(self.root, self.back, self.manual_font, self.serial, self.batteries, self.parallel)
 
-    def __init__(self, root, back, font):
+    def __init__(self, root, back, manual_font, serial, batteries, parallel):
         self.root = root
         self.back = back
-        self.manual_font = font
+        self.manual_font = manual_font
+        self.serial = serial
+        self.batteries = batteries
+        self.parallel = parallel
         self.complexWiresWin = Toplevel(self.root)
         self.complexWiresWin.title("Complicated Wires")
         self.complexWiresWin.resizable(False, False)
@@ -28,9 +31,10 @@ class ComplexWires:
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
 
-        self.firstFrame = Frame(self.complexWiresWin, bg=back)
-        self.secondFrame = Frame(self.complexWiresWin, bg=back)
-        self.thirdFrame = Frame(self.complexWiresWin, bg=back)
+        self.mainFrame = Frame(self.complexWiresWin, bg=back)
+        self.firstFrame = Frame(self.mainFrame, bg=back)
+        self.secondFrame = Frame(self.mainFrame, bg=back)
+        self.thirdFrame = Frame(self.mainFrame, bg=back)
 
         self.topButtons = Frame(self.complexWiresWin, bg=back)
         self.bottomButtons = Frame(self.complexWiresWin, bg=back)
@@ -69,6 +73,7 @@ class ComplexWires:
 
         for i in range(len(self.buttons)):
             self.buttons[i].pack()
+
         self.nextButton = Button(self.complexWiresWin, text="NEXT", font=("Terminal", 20),
                                  command=lambda: self.ask_wires())
         self.backButton = Button(self.complexWiresWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
@@ -83,6 +88,7 @@ class ComplexWires:
         self.selectLabel.config(text="SELECT ALL THE SPECIFICATIONS OF THE WIRE")
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
+        self.mainFrame.pack()
         self.firstFrame.pack(side=LEFT, padx=100, ipady=120)
         self.secondFrame.pack(side=LEFT, ipady=140)
         self.thirdFrame.pack(side=LEFT, padx=100, ipady=140)
@@ -95,39 +101,62 @@ class ComplexWires:
             self.nextButton.config(state=DISABLED)
 
     def ask_wires(self):
+        self.mainFrame.pack_forget()
         self.nextButton.place_forget()
         self.resetButton.place(x=0, y=0)
         if self.white.get() and not self.red.get() and not self.blue.get():
             if (not self.led.get() and not self.star.get()) or (self.star.get() and not self.led.get()):
                 self.cut_wire(True)
             elif self.star.get() and self.led.get():
-                self.ask_batteries()
+                if self.batteries >= 2:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
             elif not self.star.get() and self.led.get():
                 self.cut_wire(False)
 
         elif self.red.get() and not self.blue.get():
             if not self.led.get() and not self.star.get():
-                self.ask_serial()
+                if (int(self.serial[-1]) % 2) == 0:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
+
             elif not self.led.get() and self.star.get():
                 self.cut_wire(True)
             elif (self.led.get() and not self.star.get()) or (self.led.get() and self.star.get()):
-                self.ask_batteries()
+                if self.batteries >= 2:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
 
         elif self.blue.get() and not self.red.get():
             if not self.led.get() and not self.star.get():
-                self.ask_serial()
+                if (int(self.serial[-1]) % 2) == 0:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
             elif not self.led.get() and self.star.get():
                 self.cut_wire(False)
             elif (self.led.get() and not self.star.get()) or (self.led and self.star.get()):
-                self.ask_parallel()
+                if self.parallel:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
 
         elif self.blue.get() and self.red.get():
-            if not (self.led.get() and not self.star.get()) or (self.led.get() and not self.star.get()):
-                self.ask_serial()
-            elif not self.led.get() and self.star.get():
-                self.ask_parallel()
+            if not self.led.get() and self.star.get():
+                if self.parallel:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
             elif self.led.get() and self.star.get():
                 self.cut_wire(False)
+            elif (not self.led.get() and not self.star.get()) or (self.led.get() and not self.star.get()):
+                if (int(self.serial[-1]) % 2) == 0:
+                    self.cut_wire(True)
+                else:
+                    self.cut_wire(False)
 
     def cut_wire(self, cut):
         self.firstFrame.pack_forget()
@@ -146,52 +175,3 @@ class ComplexWires:
             self.selectLabel.config(text="CUT THE WIRE")
         else:
             self.selectLabel.config(text="DO NOT CUT THE WIRE")
-
-    def ask_batteries(self):
-        self.firstFrame.pack_forget()
-        self.secondFrame.pack_forget()
-        self.thirdFrame.pack_forget()
-
-        self.topButtons.pack()
-        self.bottomButtons.pack(pady=10)
-        self.firstButton.pack(side=LEFT, padx=10)
-        self.secondButton.pack(side=LEFT, padx=10)
-        self.thirdButton.pack(side=LEFT, padx=10)
-
-        self.selectLabel.config(text="HOW MANY BATTERIES ARE IN THE BOMB?")
-        self.firstButton.config(text="NONE", font=self.manual_font,
-                                command=lambda: self.cut_wire(False))
-        self.secondButton.config(text="1 BATTERY", font=self.manual_font,
-                                 command=lambda: self.cut_wire(False))
-        self.thirdButton.config(text="2 OR MORE BATTERIES", font=self.manual_font,
-                                command=lambda: self.cut_wire(True))
-
-    def ask_serial(self):
-        self.firstFrame.pack_forget()
-        self.secondFrame.pack_forget()
-        self.thirdFrame.pack_forget()
-
-        self.topButtons.pack()
-        self.firstButton.pack(side=LEFT, padx=10)
-        self.secondButton.pack(side=LEFT, padx=10)
-
-        self.selectLabel.config(text="IS THE LAST DIGIT OF THE\nSERIAL NUMBER ODD OR EVEN?")
-        self.firstButton.config(text="ODD", font=self.manual_font,
-                                command=lambda: self.cut_wire(False))
-        self.secondButton.config(text="EVEN", font=self.manual_font,
-                                 command=lambda: self.cut_wire(True))
-
-    def ask_parallel(self):
-        self.firstFrame.pack_forget()
-        self.secondFrame.pack_forget()
-        self.thirdFrame.pack_forget()
-
-        self.topButtons.pack()
-        self.firstButton.pack(side=LEFT, padx=10)
-        self.secondButton.pack(side=LEFT, padx=10)
-
-        self.selectLabel.config(text="DOES THE BOMB HAS A PARALLEL PORT?")
-        self.firstButton.config(text="YES", font=self.manual_font,
-                                command=lambda: self.cut_wire(True))
-        self.secondButton.config(text="NO", font=self.manual_font,
-                                 command=lambda: self.cut_wire(False))

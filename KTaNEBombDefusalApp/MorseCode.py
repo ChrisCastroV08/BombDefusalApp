@@ -82,6 +82,7 @@ class MorseCode:
         self.thirdButton.pack(side=LEFT, padx=10)
         self.fifthButton.pack(side=LEFT, padx=10)
         self.sixthButton.pack(side=LEFT, padx=10)
+        self.seventhButton.pack(side=LEFT, padx=10)
 
         self.backButton = Button(self.morseCodeWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
@@ -92,13 +93,17 @@ class MorseCode:
         self.write()
 
     def word(self, string):
-        if string != "clear":
+        if string != "clear" and string != "erase":
             self.letter_label.append(string)
             self.morseLabel.config(text=''.join(self.letter_label))
             if string == "/":
                 self.letter_list.append(" ")
             else:
                 self.letter_list.append(string)
+        elif string == "erase":
+            self.letter_label = self.letter_label[:-1]
+            self.morseLabel.config(text=''.join(self.letter_label))
+            self.letter_list = self.letter_list[:-1]
         else:
             self.letter_label.clear()
             self.letter_list.clear()
@@ -113,8 +118,9 @@ class MorseCode:
         self.firstButton.config(text="-", command=lambda: self.word("-"))
         self.secondButton.config(text=".", command=lambda: self.word("."))
         self.thirdButton.config(text="/", command=lambda: self.word("/"))
-        self.sixthButton.config(text="NEXT", command=lambda: self.detect(''.join(self.letter_list)))
-        self.fifthButton.config(text="CLEAR", command=lambda: self.word("clear"))
+        self.fifthButton.config(text="CLEAR", command=lambda: self.word("clear"), fg="red")
+        self.sixthButton.config(text="ERASE", command=lambda: self.word("erase"))
+        self.seventhButton.config(text="NEXT", command=lambda: self.detect(''.join(self.letter_list)), fg="green")
 
     def detect(self, txt):
         self.resetButton.place(x=0, y=0)
@@ -151,10 +157,9 @@ class MorseCode:
                                                                  "SELECT THE WORD THAT MATCHES THE BEST")
         else:
             self.selectLabel.config(text="SELECT THE WORD THAT MATCHES THE BEST")
-
         i = 0
         for btn in but_config:
-            buttons[i].config(text=btn[0], command=btn[1])
+            buttons[i].config(text=btn[0], command=btn[1], fg="black")
             buttons[i].pack(side=LEFT, padx=10)
             i = i + 1
 
@@ -176,6 +181,3 @@ class MorseCode:
                 self.selectLabel.config(text="THE CHOSEN WORD IS " + info[0][i] +
                                              "\nAND RESPONDS TO THE FREQUENCY 3." + str(info[1][i]) + "MHz")
                 break
-
-
-

@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter.font import Font
 
 
 class Wires:
@@ -9,15 +8,21 @@ class Wires:
             self.wiresWin.destroy()
         elif num == 1:
             self.wiresWin.destroy()
-            self.__init__(self.root, self.back)
+            self.__init__(self.root, self.back, self.manual_font, self.serial)
 
-    def __init__(self, root, back):
+    def __init__(self, root, back, manual_font, serial):
         self.root = root
         self.back = back
+        self.manual_font = manual_font
+        self.serial = serial
+
         self.wiresWin = Toplevel(self.root)
         self.wiresWin.title("Wires")
         self.wiresWin.resizable(False, False)
         self.wiresWin.config(bg=back)
+
+        self.wiresWin.protocol('WM_DELETE_WINDOW', lambda: self.reset(0))
+
         self.lftPos = (self.wiresWin.winfo_screenwidth() - 1000) / 2
         self.topPos = (self.wiresWin.winfo_screenheight() - 700) / 2
         self.wiresWin.geometry("%dx%d+%d+%d" % (1000, 700, self.lftPos, self.topPos))
@@ -54,17 +59,14 @@ class Wires:
         self.wires_com(0)
 
     def wires_com(self, num_wires):
-        manual_font = Font(
-            family="Terminal",
-            size=20)
         if num_wires == 0:
             self.selectLabel.config(text="HOW MANY WIRES ARE THERE?")
             self.thirdButton.pack(side=LEFT, padx=10)
             self.fourthButton.pack(side=LEFT, padx=10)
-            self.firstButton.config(text="3 WIRES", font=manual_font, command=lambda: self.wires_com(3))
-            self.secondButton.config(text="4 WIRES", font=manual_font, command=lambda: self.wires_com(4))
-            self.thirdButton.config(text="5 WIRES", font=manual_font, command=lambda: self.wires_com(5))
-            self.fourthButton.config(text="6 WIRES", font=manual_font, command=lambda: self.wires_com(6))
+            self.firstButton.config(text="3 WIRES", font=self.manual_font, command=lambda: self.wires_com(3))
+            self.secondButton.config(text="4 WIRES", font=self.manual_font, command=lambda: self.wires_com(4))
+            self.thirdButton.config(text="5 WIRES", font=self.manual_font, command=lambda: self.wires_com(5))
+            self.fourthButton.config(text="6 WIRES", font=self.manual_font, command=lambda: self.wires_com(6))
 
         else:
             self.resetButton.place(x=0, y=0)
@@ -72,25 +74,25 @@ class Wires:
             self.fourthButton.pack_forget()
             if num_wires == 3 or num_wires == 4:
                 self.selectLabel.config(text="ARE THERE ANY RED WIRES?")
-                self.firstButton.config(image='', text="YES", font=manual_font,
+                self.firstButton.config(text="YES", font=self.manual_font,
                                         command=lambda: self.yes_no_wires(True, num_wires, 1))
                 if num_wires == 3:
-                    self.secondButton.config(image='', text="NO", font=manual_font,
+                    self.secondButton.config(text="NO", font=self.manual_font,
                                              command=lambda: self.cut_wire("SECOND"))
                 if num_wires == 4:
-                    self.secondButton.config(image='', text="NO", font=manual_font,
+                    self.secondButton.config(text="NO", font=self.manual_font,
                                              command=lambda: self.yes_no_wires(False, num_wires, 1))
             elif num_wires == 5:
-                self.selectLabel.config(text="IS THE LAST WIRE BLACK?")
-                self.firstButton.config(image='', text="YES", font=manual_font,
+                self.selectLabel.config(text="ARE THERE ANY BLACK WIRES?")
+                self.firstButton.config(text="YES", font=self.manual_font,
                                         command=lambda: self.yes_no_wires(True, num_wires, 1))
-                self.secondButton.config(image='', text="NO", font=manual_font,
-                                         command=lambda: self.yes_no_wires(False, num_wires, 1))
+                self.secondButton.config(text="NO", font=self.manual_font,
+                                         command=lambda: self.cut_wire("SECOND"))
             elif num_wires == 6:
                 self.selectLabel.config(text="ARE THERE ANY YELLOW WIRES?")
-                self.firstButton.config(image='', text="YES", font=manual_font,
+                self.firstButton.config(text="YES", font=self.manual_font,
                                         command=lambda: self.yes_no_wires(True, num_wires, 1))
-                self.secondButton.config(image='', text="NO", font=manual_font,
+                self.secondButton.config(text="NO", font=self.manual_font,
                                          command=lambda: self.yes_no_wires(False, num_wires, 1))
 
     def yes_no_wires(self, answer, wires, num):
@@ -110,27 +112,26 @@ class Wires:
             # FOUR WIRES
             elif wires == 4:
                 if num == 1:
-                    self.selectLabel.config(text="IS THERE MORE THAN 1 RED WIRE?")
-                    self.firstButton.config(command=lambda: self.yes_no_wires(True, 4, num + 1))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num + 1))
-
-                elif num == 2:
-                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?\n"
-                                                 "ODDS=(1,3,5,7,9)")
-                    self.firstButton.config(command=lambda: self.cut_wire("LAST RED"))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num))
+                    if (int(self.serial[-1]) % 2) != 0:
+                        self.selectLabel.config(text="IS THERE MORE THAN 1 RED WIRE?")
+                        self.firstButton.config(command=lambda: self.cut_wire("LAST RED"))
+                        self.secondButton.config(command=lambda: self.yes_no_wires(False, 4, num))
+                    else:
+                        self.yes_no_wires(False, 4, num + 1)
 
             # FIVE WIRES
             elif wires == 5:
                 if num == 1:
-                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?\n"
-                                                 "ODDS=(1,3,5,7,9)")
-                    self.firstButton.config(command=lambda: self.cut_wire("FOURTH"))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 5, 1))
+                    if (int(self.serial[-1]) % 2) != 0:  # IF THE LAST DIGIT OF THE SERIAL NUMBER IS ODD
+                        self.selectLabel.config(text="IS THE LAST WIRE BLACK?")
+                        self.firstButton.config(command=lambda: self.cut_wire("FOURTH"))
+                        self.secondButton.config(command=lambda: self.yes_no_wires(False, 5, num))
+                    else:
+                        self.yes_no_wires(False, 5, num)
                 if num == 2:
                     self.selectLabel.config(text="IS THERE MORE THAN 1 YELLOW WIRE?")
                     self.firstButton.config(command=lambda: self.cut_wire("FIRST"))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 5, 2))
+                    self.secondButton.config(command=lambda: self.cut_wire("FIRST"))
 
             # SIX WIRES
             elif wires == 6:
@@ -172,20 +173,15 @@ class Wires:
                 if num == 1:
                     self.selectLabel.config(text="IS THERE EXACTLY ONE RED WIRE?")
                     self.firstButton.config(command=lambda: self.yes_no_wires(True, 5, 2))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 5, 2))
-                elif num == 2:
-                    self.selectLabel.config(text="ARE THERE ANY BLACK WIRES?")
-                    self.firstButton.config(command=lambda: self.cut_wire("FIRST"))
-                    self.secondButton.config(command=lambda: self.cut_wire("SECOND"))
+                    self.secondButton.config(command=lambda: self.cut_wire("FIRST"))
 
             # SIX WIRES
             elif wires == 6:
                 if num == 1:
-                    self.selectLabel.config(text="IS THE LAST DIGIT OF THE SERIAL NUMBER ODD?\n"
-                                                 "ODDS=(1,3,5,7,9)")
-                    self.firstButton.config(command=lambda: self.cut_wire("THIRD"))
-                    self.secondButton.config(command=lambda: self.yes_no_wires(False, 6, 2))
-
+                    if (int(self.serial[-1]) % 2) != 0:  # IF THE LAST DIGIT OF THE SERIAL NUMBER IS ODD
+                        self.cut_wire("THIRD")
+                    else:
+                        self.yes_no_wires(False, 6, num + 1)
                 if num == 2:
                     self.selectLabel.config(text="ARE THERE ANY RED WIRES?")
                     self.firstButton.config(command=lambda: self.cut_wire("FOURTH"))
@@ -194,4 +190,4 @@ class Wires:
     def cut_wire(self, string):
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
-        self.selectLabel.config(text="CUT THE " + string + " WIRE")
+        self.selectLabel.config(text="CUT THE {} WIRE".format(string))
