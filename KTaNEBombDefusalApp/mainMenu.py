@@ -50,15 +50,20 @@ class MainMenu:
         self.knob = PhotoImage(file="Images/Knob.png")
 
         self.nameLabel = Label(self.master, font=("Terminal", 25), fg="white", bg=back,
-                               text="KEEP TALKING AND NOBODY EXPLODES\n BOMB DEFUSE APP")
+                               text="KEEP TALKING AND NOBODY EXPLODES\n BOMB DEFUSAL APP")
         self.selectLabel = Label(self.master, font=("Terminal", 20), fg="white", bg=back,
-                                 text="WELCOME TO THE 'KEEP TALKING AND NOBODY EXPLODES BOMB DEFUSAL APP',\n"
-                                      "WHERE YOU CAN DEFUSE ANY VANILLA BOMB FROM THE GAME 'KEEP TALKING AND "
-                                      "NOBODY EXPLODES'.\n"
-                                      "TO START, SIMPLY PRESS THE 'START' BUTTON BELOW. THE APP WILL ASK FOR\n"
-                                      "IMPORTANT INFO OF THE BOMB, SUCH AS THE SERIAL NUMBER, NUMBER OF\n"
-                                      "BATTERIES AND IF THE BOMB HAS A PARALLEL PORT. THESE WILL HELP WITH DEFUSING\n"
-                                      "THE MODULES THAT REQUIRE THAT INFORMATION.")
+                                 text='''
+WELCOME TO THE 
+KEEP TALKING AND NOBODY EXPLODES BOMB DEFUSAL APP,
+WHERE YOU CAN DEFUSE ANY VANILLA BOMB FROM THE GAME 
+'KEEP TALKING AND NOBODY EXPLODES'.
+TO START, SIMPLY PRESS THE 'START' BUTTON BELOW. 
+THE APP WILL THEN FIRST ASK FOR
+IMPORTANT INFO OF THE BOMB, SUCH AS THE SERIAL NUMBER, 
+NUMBER OF BATTERIES AND IF THE BOMB HAS A PARALLEL PORT. 
+THESE WILL HELP WITH DEFUSING
+THE MODULES THAT REQUIRE THAT INFORMATION.
+                                      ''')
 
         self.entryFrame = Frame(self.master, bg=back)
         self.serial_frame = Frame(self.entryFrame, bg=back)

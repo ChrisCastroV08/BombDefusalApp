@@ -93,6 +93,7 @@ class SimonSays:
     def simon_says(self, strikes, first_time):
         self.simon_list.clear()
         self.label_list.clear()
+        self.sixthButton.config(state=DISABLED)
         if first_time:
             self.info.append(strikes)
             self.info.append(self.vowel)

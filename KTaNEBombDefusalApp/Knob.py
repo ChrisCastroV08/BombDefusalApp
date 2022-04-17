@@ -27,7 +27,7 @@ class Knob:
         self.nameLabel = Label(self.knobWin, font=("Terminal", 25), fg="white", bg=back,
                                text="ON THE SUBJECT OF KNOBS")
         self.selectLabel = Label(self.knobWin, font=("Terminal", 20), fg="white", bg=back,
-                                 text="TELL THE DEFUSER TO LOOK AT THE SIX LEFT LEDs\n"
+                                 text="TELL THE DEFUSER TO LOOK AT THE SIX LEDs ON THE LEFT\n"
                                       "AND ASK HOW MANY LEDs ARE ON")
 
         self.topButtons = Frame(self.knobWin, bg=back)
@@ -71,8 +71,8 @@ class Knob:
         self.bottomButtons.pack_forget()
         self.thirdButton.pack_forget()
         if leds != "FIVE":
-            self.selectLabel.config(text="PLACE THE KNOW IN THE {} POSITION, RELATIVE TO THE 'UP' LABEL\n"
-                                         "IN THE KNOB".format(leds))
+            self.selectLabel.config(text="PLACE THE KNOB IN THE {} POSITION,\n"
+                                         "RELATIVE TO THE 'UP' LABEL IN THE KNOB".format(leds))
         else:
             self.check_5_leds("")
 
@@ -80,10 +80,6 @@ class Knob:
         if top_left == "":
             self.selectLabel.config(text="IS THE TOP LEFT LED ON?")
             self.topButtons.pack()
-            self.firstButton.config(text="YES", command=lambda: self.check_5_leds("RIGHT"))
-            self.secondButton.config(text="NO", command=lambda: self.check_5_leds("DOWN"))
-        else:
-            self.topButtons.pack_forget()
-            self.selectLabel.config(text="PLACE THE KNOW IN THE {} POSITION, RELATIVE TO THE 'UP' LABEL\n"
-                                         "IN THE KNOB".format(top_left))
+            self.firstButton.config(text="YES", command=lambda: self.check_led("RIGHT"))
+            self.secondButton.config(text="NO", command=lambda: self.check_led("DOWN"))
 
