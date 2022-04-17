@@ -100,47 +100,40 @@ class WhosOnFirst:
         self.topButtons2.pack(pady=10)
         self.bottomButtons.pack()
         self.bottomButtons2.pack(pady=10)
-        step1 = ["YES", "FIRST", "DISPLAY", "OKAY", "SAYS", "NOTHING", "      ",
-                 'BLANK', 'NO', 'LED', 'LEAD', 'READ', 'RED', 'REED',
-                 'LEED', 'HOLD ON', 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR',
-                 "THERE", "THEY'RE", "THEIR", "THEY ARE", "SEE", "C", "CEE"]
+        step1 = [["YES", "FIRST", "DISPLAY", "OKAY", "SAYS", "NOTHING", "      "],
+                 ['BLANK', 'NO', 'LED', 'LEAD', 'READ', 'RED', 'REED'],
+                 ['LEED', 'HOLD ON', 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR'],
+                 ["THERE", "THEY'RE", "THEIR", "THEY ARE", "SEE", "C", "CEE"]]
+        look = ["TOP LEFT", "TOP RIGHT", "MIDDLE LEFT", "MIDDLE RIGHT", "BOTTOM LEFT", "BOTTOM RIGHT"]
 
-        self.word1 = Button(self.topButtons, text=step1[0], font=self.manual_font, command=lambda: self.select(2))
-        self.word2 = Button(self.topButtons, text=step1[1], font=self.manual_font, command=lambda: self.select(1))
-        self.word3 = Button(self.topButtons, text=step1[2], font=self.manual_font, command=lambda: self.select(5))
-        self.word4 = Button(self.topButtons, text=step1[3], font=self.manual_font, command=lambda: self.select(1))
-        self.word5 = Button(self.topButtons, text=step1[4], font=self.manual_font, command=lambda: self.select(5))
-        self.word6 = Button(self.topButtons, text=step1[5], font=self.manual_font, command=lambda: self.select(2))
-        self.word7 = Button(self.topButtons, text=step1[6], font=self.manual_font, command=lambda: self.select(4))
-
-        self.word8 = Button(self.topButtons2, text=step1[7], font=self.manual_font, command=lambda: self.select(3))
-        self.word9 = Button(self.topButtons2, text=step1[8], font=self.manual_font, command=lambda: self.select(5))
-        self.word10 = Button(self.topButtons2, text=step1[9], font=self.manual_font, command=lambda: self.select(2))
-        self.word11 = Button(self.topButtons2, text=step1[10], font=self.manual_font, command=lambda: self.select(5))
-        self.word12 = Button(self.topButtons2, text=step1[11], font=self.manual_font, command=lambda: self.select(3))
-        self.word13 = Button(self.topButtons2, text=step1[12], font=self.manual_font, command=lambda: self.select(3))
-        self.word14 = Button(self.topButtons2, text=step1[13], font=self.manual_font, command=lambda: self.select(4))
-
-        self.word15 = Button(self.bottomButtons, text=step1[14], font=self.manual_font, command=lambda: self.select(4))
-        self.word16 = Button(self.bottomButtons, text=step1[15], font=self.manual_font, command=lambda: self.select(5))
-        self.word17 = Button(self.bottomButtons, text=step1[16], font=self.manual_font, command=lambda: self.select(3))
-        self.word18 = Button(self.bottomButtons, text=step1[17], font=self.manual_font, command=lambda: self.select(5))
-        self.word19 = Button(self.bottomButtons, text=step1[18], font=self.manual_font, command=lambda: self.select(3))
-        self.word20 = Button(self.bottomButtons, text=step1[19], font=self.manual_font, command=lambda: self.select(3))
-        self.word21 = Button(self.bottomButtons, text=step1[20], font=self.manual_font, command=lambda: self.select(0))
-
-        self.word22 = Button(self.bottomButtons2, text=step1[21], font=self.manual_font, command=lambda: self.select(5))
-        self.word23 = Button(self.bottomButtons2, text=step1[22], font=self.manual_font, command=lambda: self.select(4))
-        self.word24 = Button(self.bottomButtons2, text=step1[23], font=self.manual_font, command=lambda: self.select(3))
-        self.word25 = Button(self.bottomButtons2, text=step1[24], font=self.manual_font, command=lambda: self.select(2))
-        self.word26 = Button(self.bottomButtons2, text=step1[25], font=self.manual_font, command=lambda: self.select(5))
-        self.word27 = Button(self.bottomButtons2, text=step1[26], font=self.manual_font, command=lambda: self.select(1))
-        self.word28 = Button(self.bottomButtons2, text=step1[27], font=self.manual_font, command=lambda: self.select(5))
+        self.word1, self.word2, self.word3, self.word4, self.word5, self.word6, self.word7 =\
+            (Button(self.topButtons, font=self.manual_font, text=step1[0][i]) for i in range(7))
+        self.word8, self.word9, self.word10, self.word11, self.word12, self.word13, self.word14 = \
+            (Button(self.topButtons2, font=self.manual_font, text=step1[1][i]) for i in range(7))
+        self.word15, self.word16, self.word17, self.word18, self.word19, self.word20, self.word21 = \
+            (Button(self.bottomButtons, font=self.manual_font, text=step1[2][i]) for i in range(7))
+        self.word22, self.word23, self.word24, self.word25, self.word26, self.word27, self.word28 = \
+            (Button(self.bottomButtons2, font=self.manual_font, text=step1[3][i]) for i in range(7))
 
         self.buttons = [self.word1, self.word2, self.word3, self.word4, self.word5, self.word6, self.word7,
                         self.word8, self.word9, self.word10, self.word11, self.word12, self.word13, self.word14,
                         self.word15, self.word16, self.word17, self.word18, self.word19, self.word20, self.word21,
                         self.word22, self.word23, self.word24, self.word25, self.word26, self.word27, self.word28]
+
+        but_config = [(lambda: self.select("MIDDLE LEFT")), (lambda: self.select("TOP RIGHT")),
+                      (lambda: self.select("BOTTOM RIGHT")), (lambda: self.select("TOP RIGHT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT")),
+                      (lambda: self.select("MIDDLE LEFT")), (lambda: self.select("MIDDLE LEFT"))]
         for i in range(len(self.buttons)):
             self.buttons[i].pack(side=LEFT, padx=10)
 
@@ -153,10 +146,8 @@ class WhosOnFirst:
 
     def select(self, display):
         self.resetButton.place(x=0, y=0)
-
-        pos = ["TOP LEFT", "TOP RIGHT", "MIDDLE LEFT", "MIDDLE RIGHT", "BOTTOM LEFT", "BOTTOM RIGHT"]
-        self.selectLabel.config(text="NOW TELL THE DEFUSER TO LOOK AT THE \n"
-                                     + pos[display] + " BUTTON AND SELECT THE WORD OF THAT BUTTON")
+        self.selectLabel.config(text="NOW TELL THE DEFUSER TO LOOK AT THE\n"
+                                     "{} BUTTON AND SELECT THE WORD OF THAT BUTTON".format(display))
 
         but_config = [("READY", lambda: self.word_list(0)),
                       ("FIRST", lambda: self.word_list(1)),

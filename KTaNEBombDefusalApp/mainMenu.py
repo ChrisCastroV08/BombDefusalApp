@@ -1,5 +1,5 @@
 from KTaNEBombDefusalApp.Wires import Wires
-from KTaNEBombDefusalApp.theButton import TheButton
+from KTaNEBombDefusalApp.TheButton import TheButton
 from KTaNEBombDefusalApp.Keypad import Keypad
 from KTaNEBombDefusalApp.SimonSays import SimonSays
 from KTaNEBombDefusalApp.WhosOnFirst import WhosOnFirst
