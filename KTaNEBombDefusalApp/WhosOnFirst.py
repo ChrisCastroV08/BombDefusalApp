@@ -122,23 +122,23 @@ class WhosOnFirst:
         j = 0
         for i in step1:
             for letter in i:
-                if letter in ("YES", "NOTHING", "LED", "THEY ARE"):
-                    self.buttons[j].config(command=lambda: self.select("TOP LEFT"))
+                if letter in "UR":
+                    self.buttons[j].config(command=lambda x=j: self.select("TOP LEFT", x))
 
                 elif letter in ("FIRST", "OKAY", "C"):
-                    self.buttons[j].config(command=lambda: self.select("TOP RIGHT"))
+                    self.buttons[j].config(command=lambda x=j: self.select("TOP RIGHT", x))
 
                 elif letter in ("YES", "NOTHING", "LED", "THEY ARE"):
-                    self.buttons[j].config(command=lambda: self.select("MIDDLE LEFT"))
+                    self.buttons[j].config(command=lambda x=j: self.select("MIDDLE LEFT", x))
 
                 elif letter in ("BLANK", "READ", "RED", "YOU", "YOUR", "YOU'RE", "THEIR"):
-                    self.buttons[j].config(command=lambda: self.select("MIDDLE RIGHT"))
+                    self.buttons[j].config(command=lambda x=j: self.select("MIDDLE RIGHT", x))
 
                 elif letter in ("      ", "REED", "LEED", "THEY'RE"):
-                    self.buttons[j].config(command=lambda: self.select("BOTTOM LEFT"))
+                    self.buttons[j].config(command=lambda x=j: self.select("BOTTOM LEFT", x))
 
-                elif letter in ("DISPLAY", "SAYS", "NO", "LEAD", "HOLD ON", "YOU ARE", "THERE", "CEE"):
-                    self.buttons[j].config(command=lambda: self.select("BOTTOM RIGHT"))
+                elif letter in ("DISPLAY", "SAYS", "NO", "LEAD", "HOLD ON", "YOU ARE", "THERE", "CEE", "SEE"):
+                    self.buttons[j].config(command=lambda x=j: self.select("BOTTOM RIGHT", x))
 
                 self.buttons[j].pack(side=LEFT, padx=10)
                 j = j + 1
@@ -149,10 +149,14 @@ class WhosOnFirst:
 
         self.backButton.pack(side=BOTTOM)
 
-    def select(self, display):
+    def select(self, display, sel):
+        step1 = ["YES", "FIRST", "DISPLAY", "OKAY", "SAYS", "NOTHING", "      ",
+                 'BLANK', 'NO', 'LED', 'LEAD', 'READ', 'RED', 'REED',
+                 'LEED', 'HOLD ON', 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR',
+                 "THERE", "THEY'RE", "THEIR", "THEY ARE", "SEE", "C", "CEE"]
         self.resetButton.place(x=0, y=0)
-        self.selectLabel.config(text="NOW TELL THE DEFUSER TO LOOK AT THE\n"
-                                     "{} BUTTON AND SELECT THE WORD OF THAT BUTTON".format(display))
+        self.selectLabel.config(text="SELECTED {}\n NOW TELL THE DEFUSER TO LOOK AT THE\n"
+                                     "{} BUTTON AND SELECT THE WORD OF THAT BUTTON".format(step1[sel], display))
 
         but_config = [("READY", lambda: self.word_list(0)),
                       ("FIRST", lambda: self.word_list(1)),

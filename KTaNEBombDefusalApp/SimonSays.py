@@ -91,6 +91,7 @@ class SimonSays:
             self.sixthButton.config(state=NORMAL)
 
     def simon_says(self, strikes, first_time):
+        self.resetButton.place(x=0, y=0)
         self.simon_list.clear()
         self.label_list.clear()
         self.sixthButton.config(state=DISABLED)
