@@ -28,6 +28,8 @@ class ComplexWires:
         self.nameLabel = Label(self.complexWiresWin, font=("Terminal", 25), fg="white", bg=back,
                                text="ON THE SUBJECT OF COMPLICATED\n WIRES")
         self.selectLabel = Label(self.complexWiresWin, font=self.manual_font, fg="white", bg=back)
+        self.infoLabel = Label(self.complexWiresWin, font=self.manual_font, fg="white", bg=back)
+
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
 
@@ -36,12 +38,9 @@ class ComplexWires:
         self.secondFrame = Frame(self.mainFrame, bg=back)
         self.thirdFrame = Frame(self.mainFrame, bg=back)
 
-        self.topButtons = Frame(self.complexWiresWin, bg=back)
-        self.bottomButtons = Frame(self.complexWiresWin, bg=back)
-
-        self.firstButton = Button(self.topButtons, font=self.manual_font)
-        self.secondButton = Button(self.topButtons, font=self.manual_font)
-        self.thirdButton = Button(self.bottomButtons, font=self.manual_font)
+        self.firstFrame.pack(side=LEFT, padx=100)
+        self.secondFrame.pack(side=LEFT, ipady=20)
+        self.thirdFrame.pack(side=LEFT, padx=100, ipady=20)
 
         self.red = IntVar()
         self.blue = IntVar()
@@ -69,13 +68,12 @@ class ComplexWires:
         self.noStar = Radiobutton(self.thirdFrame, text="WITH NO STAR", fg="white", selectcolor=back, bg=self.back,
                                   activebackground=back, font=self.manual_font, variable=self.star, value=0)
 
-        self.buttons = [self.redWire, self.blueWire, self.whiteWire, self.ledOn, self.ledOff, self.yesStar, self.noStar]
+        self.buttons = [self.whiteWire, self.redWire, self.blueWire, self.ledOn, self.ledOff, self.yesStar, self.noStar]
 
         for i in range(len(self.buttons)):
             self.buttons[i].pack()
 
-        self.nextButton = Button(self.complexWiresWin, text="NEXT", font=("Terminal", 20),
-                                 command=lambda: self.ask_wires())
+        self.nextButton = Button(self.complexWiresWin, text="NEXT", font=("Terminal", 20))
         self.backButton = Button(self.complexWiresWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
         self.resetButton = Button(self.complexWiresWin, text="RESET", font=("Terminal", 20),
@@ -86,92 +84,111 @@ class ComplexWires:
 
     def wire_info(self):
         self.selectLabel.config(text="SELECT ALL THE SPECIFICATIONS OF THE WIRE")
-        self.topButtons.pack_forget()
-        self.bottomButtons.pack_forget()
         self.mainFrame.pack()
-        self.firstFrame.pack(side=LEFT, padx=100, ipady=120)
-        self.secondFrame.pack(side=LEFT, ipady=140)
-        self.thirdFrame.pack(side=LEFT, padx=100, ipady=140)
+        self.nextButton.pack_forget()
+        self.nextButton.pack()
+        self.infoLabel.pack_forget()
+        self.infoLabel.pack(pady=20)
 
-        self.nextButton.place(x=450, y=350)
+        if self.white.get() and self.red.get() and self.blue.get():
+            self.nextButton.config(state=DISABLED)
 
-        if self.white.get() or self.red.get() or self.blue.get():
-            self.nextButton.config(state=NORMAL)
+        elif self.white.get() or self.red.get() or self.blue.get():
+            self.nextButton.config(state=NORMAL, command=lambda: self.ask_wires())
+
         else:
             self.nextButton.config(state=DISABLED)
 
     def ask_wires(self):
-        self.mainFrame.pack_forget()
-        self.nextButton.place_forget()
         self.resetButton.place(x=0, y=0)
         if self.white.get() and not self.red.get() and not self.blue.get():
             if (not self.led.get() and not self.star.get()) or (self.star.get() and not self.led.get()):
-                self.cut_wire(True)
+                self.cut_wire("")
             elif self.star.get() and self.led.get():
                 if self.batteries >= 2:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
             elif not self.star.get() and self.led.get():
-                self.cut_wire(False)
+                self.cut_wire("DO NOT CUT")
 
         elif self.red.get() and not self.blue.get():
             if not self.led.get() and not self.star.get():
                 if (int(self.serial[-1]) % 2) == 0:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
 
             elif not self.led.get() and self.star.get():
-                self.cut_wire(True)
+                self.cut_wire("")
             elif (self.led.get() and not self.star.get()) or (self.led.get() and self.star.get()):
                 if self.batteries >= 2:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
 
         elif self.blue.get() and not self.red.get():
             if not self.led.get() and not self.star.get():
                 if (int(self.serial[-1]) % 2) == 0:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
             elif not self.led.get() and self.star.get():
-                self.cut_wire(False)
+                self.cut_wire("DO NOT CUT")
             elif (self.led.get() and not self.star.get()) or (self.led and self.star.get()):
                 if self.parallel:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
 
         elif self.blue.get() and self.red.get():
             if not self.led.get() and self.star.get():
                 if self.parallel:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
             elif self.led.get() and self.star.get():
-                self.cut_wire(False)
+                self.cut_wire("DO NOT CUT")
             elif (not self.led.get() and not self.star.get()) or (self.led.get() and not self.star.get()):
                 if (int(self.serial[-1]) % 2) == 0:
-                    self.cut_wire(True)
+                    self.cut_wire("CUT")
                 else:
-                    self.cut_wire(False)
+                    self.cut_wire("DO NOT CUT")
 
     def cut_wire(self, cut):
-        self.firstFrame.pack_forget()
-        self.secondFrame.pack_forget()
-        self.thirdFrame.pack_forget()
-
-        self.topButtons.pack()
-        self.bottomButtons.pack_forget()
-        self.secondButton.pack_forget()
-        self.firstButton.pack(side=LEFT, padx=10)
-        self.firstButton.config(text="NEXT", command=lambda: self.wire_info())
-
-        for i in range(0, 3):
-            self.buttons[i].deselect()
-        if cut:
-            self.selectLabel.config(text="CUT THE WIRE")
+        self.mainFrame.pack_forget()
+        self.nextButton.config(command=lambda: self.wire_info())
+        specifications = []
+        if self.white.get():
+            if self.red.get():
+                specifications.append("WHITE AND RED")
+            elif self.blue.get():
+                specifications.append("WHITE AND BLUE")
+            else:
+                specifications.append("WHITE")
+        elif self.red.get():
+            if self.blue.get():
+                specifications.append("RED AND BLUE")
+            else:
+                specifications.append("RED")
         else:
-            self.selectLabel.config(text="DO NOT CUT THE WIRE")
+            specifications.append("BLUE")
+
+        if self.led.get():
+            specifications.append("WITH LED")
+        else:
+            specifications.append("WITH NO LED")
+
+        if self.star.get():
+            specifications.append("WITH STAR")
+        else:
+            specifications.append("WITH NO STAR")
+
+        self.infoLabel.config(text="WIRE SPECIFICATIONS:\n"
+                                   "COLOR: {}\n"
+                                   "{}\n"
+                                   "{}".format(specifications[0], specifications[1], specifications[2]))
+        self.selectLabel.config(text="{} THE WIRE".format(cut))
+
+        for i in range(3):
+            self.buttons[i].deselect()

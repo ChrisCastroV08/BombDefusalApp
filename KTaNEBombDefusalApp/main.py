@@ -1,4 +1,5 @@
 from KTaNEBombDefusalApp.mainMenu import *
 
-bomb = MainMenu()
-bomb.start()
+if __name__ == "__main__":
+    bomb = MainMenu()
+    bomb.start()

@@ -29,8 +29,7 @@ class Wires:
 
         self.nameLabel = Label(self.wiresWin, font=("Terminal", 25), fg="white", bg=back,
                                text="ON THE SUBJECT OF WIRES")
-        self.selectLabel = Label(self.wiresWin, font=("Terminal", 20), fg="white", bg=back,
-                                 text="HOW MANY WIRES ARE THERE?")
+        self.selectLabel = Label(self.wiresWin, font=("Terminal", 20), fg="white", bg=back)
         self.topButtons = Frame(self.wiresWin, bg=back)
         self.bottomButtons = Frame(self.wiresWin, bg=back)
         self.nameLabel.pack(side=TOP, pady=30)
