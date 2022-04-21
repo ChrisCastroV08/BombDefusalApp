@@ -25,6 +25,10 @@ class WireSequences:
         self.nameLabel = Label(self.wireSequencesWin, font=("Terminal", 25), fg="white", bg=back,
                                text="ON THE SUBJECT OF WIRE SEQUENCES")
         self.selectLabel = Label(self.wireSequencesWin, font=self.manual_font, fg="white", bg=back)
+        self.infoLabel = Label(self.wireSequencesWin, font=self.manual_font, fg="white", bg=back,
+                               text="RED WIRE OCURRENCES : 0\n"
+                                    "BLUE WIRE OCURRENCES: 0\n"
+                                    "BLACK WIRES OCURRENCES: 0")
 
         self.topButtons = Frame(self.wireSequencesWin, bg=back)
         self.bottomButtons = Frame(self.wireSequencesWin, bg=back)
@@ -33,6 +37,7 @@ class WireSequences:
 
         self.topButtons.pack()
         self.bottomButtons.pack(pady=10)
+        self.infoLabel.pack()
 
         self.firstButton = Button(self.topButtons, font=self.manual_font)
         self.secondButton = Button(self.topButtons, font=self.manual_font)
@@ -57,6 +62,9 @@ class WireSequences:
         self.thirdButton.pack(side=LEFT, padx=10)
 
     def ask_wires(self, color, letter, red, blue, black):
+        self.infoLabel.config(text="RED WIRE OCURRENCES : {}\n"
+                                   "BLUE WIRE OCURRENCES: {}\n"
+                                   "BLACK WIRES OCURRENCES: {}".format(red, blue, black))
         self.resetButton.place(x=0, y=0)
         if letter == "":
             self.selectLabel.config(text="WHAT IS THAT WIRE CONNECTED TO?")

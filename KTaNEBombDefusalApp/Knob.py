@@ -46,7 +46,7 @@ class Knob:
                                    command=lambda: self.check_led("DOWN"))
         self.fifthButton = Button(self.bottomButtons, font=self.manual_font, text="4 LEDs",
                                   command=lambda: self.check_led("UP"))
-        self.sixthButton = Button(self.bottomButtons, font=self.manual_font, text="MORE THAN 4 LEDs",
+        self.sixthButton = Button(self.bottomButtons, font=self.manual_font, text="5 LEDs",
                                   command=lambda: self.check_led("FIVE"))
 
         self.firstButton.pack(side=LEFT, padx=10)

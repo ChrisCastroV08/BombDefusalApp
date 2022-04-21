@@ -154,6 +154,7 @@ THE MODULES THAT REQUIRE THAT INFORMATION.
         self.nextButton.pack_forget()
         self.entryFrame.pack()
         self.nextButton.pack()
+        self.serial_entry.focus()
         self.selectLabel.config(text="WRITE DOWN ALL THE INFORMATION OF THE BOMB\n")
         self.nextButton.config(text="NEXT", command=lambda: self.place_modules(), state=DISABLED)
 

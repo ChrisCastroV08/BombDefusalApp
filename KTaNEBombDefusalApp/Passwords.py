@@ -33,6 +33,7 @@ class Passwords:
         self.selectLabel.pack(side=TOP, pady=30)
 
         self.letters = Entry(self.passWin, font=self.manual_font)
+        self.letters.focus()
 
         self.nextButton = Button(self.passWin, font=self.manual_font, text="NEXT",
                                  command=lambda: self.passwords(0))
@@ -80,6 +81,6 @@ class Passwords:
             self.selectLabel.config(text="THE WORD IS: " + ''.join(self.active).upper())
         else:
             self.letters.delete(0, "end")
-            self.infoLabel.config(text="POSSIBLE WORDS: " + ', '.join(self.active).upper())
+            self.infoLabel.config(text="POSSIBLE WORDS:\n" + ', '.join(self.active).upper())
             self.nextButton.config(command=lambda: self.passwords(iterations + 1))
 

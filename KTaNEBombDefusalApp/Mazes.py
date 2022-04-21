@@ -1,13 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
 
-b11, b12, b13, b14, b15, b16, \
-b21, b22, b23, b24, b25, b26, \
-b31, b32, b33, b34, b35, b36, \
-b41, b42, b43, b44, b45, b46, \
-b51, b52, b53, b54, b55, b56, \
-b61, b62, b63, b64, b65, b66 = (False for f in range(36))
-
 
 class Mazes:
 
@@ -56,15 +49,20 @@ class Mazes:
             (ImageTk.PhotoImage(mazes[j]) for j in range(len(mazes)))
 
         self.canvas.bind("<Button-1>", lambda event, click="left": self.callback(event, click))
-        self.circles = False
+        self.second_stage = False
+        self.circle = False
+        self.old_x_circle = 0
+        self.old_y_circle = 0
+
         self.light = False
         self.x_light = 0
         self.y_light = 0
-        self.x_triangle = 0
-        self.y_triangle = 0
-        self.triangle = False
         self.old_x_light = 0
         self.old_y_light = 0
+
+        self.triangle = False
+        self.x_triangle = 0
+        self.y_triangle = 0
         self.old_x_triangle = 0
         self.old_y_triangle = 0
 
@@ -75,11 +73,13 @@ class Mazes:
         self.nextButton = Button(self.mazeWin, font=self.manual_font, text="NEXT",
                                  state=DISABLED)
         self.infoLabel = Label(self.mazeWin, font=self.manual_font, fg="white", bg=back,
-                                 text="TO PLACE A CIRCLE IN THE MAZE, PRESS LEFT CLICK\n"
-                                      "ON ANY EMPTY SPACE.\n"
-                                      "TO ERASE A CIRCLE, LEFT CLICK IT AGAIN\n"
-                                      "WHEN YOU PLACE A CIRCLE IN ANY POSITION, THE 'NEXT'\n"
-                                      "BUTTON WILL BE AVAILABLE")
+                               text="TO PLACE A CIRCLE IN THE MAZE, PRESS LEFT CLICK\n"
+                                    "ON ANY EMPTY SPACE.\n"
+                                    "TO REMOVE IT, LEFT CLICK IT AGAIN, OR SELECT ANOTHER\n"
+                                    "EMPTY SPACE.\n"
+                                    "WHEN YOU PLACE A CIRCLE IN ANY POSITION, THE 'NEXT'\n"
+                                    "BUTTON WILL BE AVAILABLE\n"
+                                    "MAKE SURE YOU PLACED A VALID CIRCLE")
         self.infoLabel.pack()
         self.nextButton.pack()
 
@@ -90,24 +90,17 @@ class Mazes:
 
         self.backButton.pack(side=BOTTOM)
 
-        self.selected = [[b11, b12, b13, b14, b15, b16],
-                         [b21, b22, b23, b24, b25, b26],
-                         [b31, b32, b33, b34, b35, b36],
-                         [b41, b42, b43, b44, b45, b46],
-                         [b51, b52, b53, b54, b55, b56],
-                         [b61, b62, b63, b64, b65, b66],
-                         ]
+        self.selected = [[False] * 6,
+                         [False] * 6,
+                         [False] * 6,
+                         [False] * 6,
+                         [False] * 6,
+                         [False] * 6]
         self.maze_img = [self.maze1img, self.maze2img, self.maze3img,
                          self.maze4img, self.maze5img, self.maze6img,
                          self.maze7img, self.maze8img, self.maze9img]
 
     def callback(self, event, click):
-        tags = [["b11", "b12", "b13", "b14", "b15", "b16"],
-                ["b21", "b22", "b23", "b24", "b25", "b26"],
-                ["b31", "b32", "b33", "b34", "b35", "b36"],
-                ["b41", "b42", "b43", "b44", "b45", "b46"],
-                ["b51", "b52", "b53", "b54", "b55", "b56"],
-                ["b61", "b62", "b63", "b64", "b65", "b66"]]
         pos = [[5, 30, 55, 80, 105, 130],
                [20, 45, 70, 95, 120, 145]]
         for i in range(len(pos[0])):
@@ -115,11 +108,19 @@ class Mazes:
                 for j in range(len(pos[0])):
                     if event.y in range(pos[0][j], pos[1][j]):
                         if not self.selected[i][j]:
-                            if not self.circles:
-                                self.canvas.create_oval(pos[0][i], pos[0][j]
-                                                        , pos[1][i], pos[1][j], outline="green", width=3,
-                                                        tag=tags[i][j])
+                            if not self.second_stage:
+                                if not self.circle:
+                                    self.circle = True
+                                else:
+                                    self.canvas.delete("circle")
+                                    self.selected[self.old_x_circle][self.old_y_circle] = False
+
+                                self.canvas.create_oval(pos[0][i], pos[0][j],
+                                                        pos[1][i], pos[1][j], outline="green", width=3,
+                                                        tag="circle")
                                 self.selected[i][j] = True
+                                self.old_x_circle = i
+                                self.old_y_circle = j
                             else:
                                 if click == "left":
                                     if not self.light:
@@ -128,8 +129,8 @@ class Mazes:
                                         self.canvas.delete("light")
                                         self.selected[self.old_x_light][self.old_y_light] = False
 
-                                    self.canvas.create_rectangle(pos[0][i] + 5, pos[0][j] + 5
-                                                                 , pos[1][i] - 5, pos[1][j] - 5, outline="#182db5",
+                                    self.canvas.create_rectangle(pos[0][i] + 5, pos[0][j] + 5,
+                                                                 pos[1][i] - 5, pos[1][j] - 5, outline="#182db5",
                                                                  width=2,
                                                                  tag="light", fill="#182db5")
                                     self.selected[i][j] = True
@@ -159,8 +160,8 @@ class Mazes:
 
                             break
                         else:
-                            if not self.circles:
-                                self.canvas.delete(tags[i][j])
+                            if not self.second_stage:
+                                self.canvas.delete("circle")
                                 self.selected[i][j] = False
                             else:
                                 eq_x = False
@@ -172,7 +173,12 @@ class Mazes:
                                         if pos[1][j] == self.y_triangle:
                                             eq_y = True
                                         if eq_x and eq_y:
-                                            return None
+                                            self.canvas.delete("light")
+                                            self.canvas.create_rectangle(pos[0][i] + 5, pos[0][j] + 5,
+                                                                         pos[1][i] - 5, pos[1][j] - 5,
+                                                                         outline="#182db5",
+                                                                         width=2,
+                                                                         tag="light", fill="#182db5")
                                         else:
                                             self.canvas.delete("light")
                                             self.light = False
@@ -196,7 +202,7 @@ class Mazes:
 
                             break
                 break
-        if not self.circles:
+        if not self.second_stage:
             self.activate()
 
     def img_crop(self, i, j):
@@ -248,7 +254,7 @@ class Mazes:
                 if self.selected[i][j]:
                     self.selected[i][j] = False
         self.canvas.bind("<Button-3>", lambda event, click="right": self.callback(event, click))
-        self.circles = True
+        self.second_stage = True
         self.selectLabel.config(text="NOW PLACE THE LIGHT AND TRIANGLE\n"
                                      "AND GUIDE THE DEFUSER TO GET THE LIGHT IN\n"
                                      "THE TRIANGLE")
