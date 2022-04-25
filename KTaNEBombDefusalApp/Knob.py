@@ -8,12 +8,13 @@ class Knob:
             self.knobWin.destroy()
         elif num == 1:
             self.knobWin.destroy()
-            self.__init__(self.root, self.back, self.manual_font)
+            self.__init__(self.root, self.back, self.manual_font, self.knobImage)
 
-    def __init__(self, root, back, manual_font):
+    def __init__(self, root, back, manual_font, knobImage):
         self.root = root
         self.back = back
         self.manual_font = manual_font
+        self.knobImage = knobImage
         self.knobWin = Toplevel(self.root)
         self.knobWin.title("The Button")
         self.knobWin.resizable(False, False)
@@ -28,13 +29,21 @@ class Knob:
                                  text="TELL THE DEFUSER TO LOOK AT THE SIX LEDs ON THE LEFT\n"
                                       "AND ASK HOW MANY LEDs ARE ON")
 
+        self.width = self.knobImage.width()
+        self.height = self.knobImage.height()
+
         self.topButtons = Frame(self.knobWin, bg=back)
         self.bottomButtons = Frame(self.knobWin, bg=back)
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
+        self.canvas = Canvas(self.knobWin, bg=back, highlightthickness=0, height=self.height + 1,
+                             width=self.width + 1)
+        self.canvas.create_image(self.width / 2, self.height / 2, image=self.knobImage)
+        self.canvas.create_oval(10, 55, 45, 90, outline="red", width=2, tag="first")
 
         self.topButtons.pack()
         self.bottomButtons.pack(pady=10)
+        self.canvas.pack()
 
         self.firstButton = Button(self.topButtons, font=self.manual_font, text="0 LEDs",
                                   command=lambda: self.check_led("LEFT"))
@@ -63,16 +72,20 @@ class Knob:
 
         self.backButton.pack(side=BOTTOM)
 
-    def check_led(self, leds):
+    def check_led(self, led_s):
         self.resetButton.place(x=0, y=0)
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
         self.thirdButton.pack_forget()
-        if leds != "FIVE":
+        self.canvas.pack_forget()
+        if led_s != "FIVE":
             self.selectLabel.config(text="PLACE THE KNOB IN THE {} POSITION,\n"
-                                         "RELATIVE TO THE 'UP' LABEL IN THE KNOB".format(leds))
+                                         "RELATIVE TO THE 'UP' LABEL IN THE KNOB".format(led_s))
         else:
             self.selectLabel.config(text="IS THE TOP LEFT LED ON?")
             self.topButtons.pack()
+            self.canvas.delete("first")
+            self.canvas.pack(pady=10)
+            self.canvas.create_oval(20, 55, 30, 65, outline="red", width=2)
             self.firstButton.config(text="YES", command=lambda: self.check_led("RIGHT"))
             self.secondButton.config(text="NO", command=lambda: self.check_led("DOWN"))

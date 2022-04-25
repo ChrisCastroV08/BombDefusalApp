@@ -47,21 +47,26 @@ class SimonSays:
         self.topButtons.pack()
         self.bottomButtons.pack(pady=10)
         self.bottomButtons2.pack()
-        self.ansLabel.pack()
+        self.ansLabel.pack(pady=10)
 
-        self.firstButton = Button(self.topButtons, font=self.manual_font)
-        self.secondButton = Button(self.topButtons, font=self.manual_font)
-        self.thirdButton = Button(self.bottomButtons, font=self.manual_font)
-        self.fourthButton = Button(self.bottomButtons, font=self.manual_font)
+        self.firstButton = Button(self.topButtons, font=self.manual_font,
+                                  text="NO STRIKES", command=lambda: self.simon_says(0, True))
+        self.secondButton = Button(self.topButtons, font=self.manual_font
+                                   )
+        self.thirdButton = Button(self.bottomButtons, font=self.manual_font,
+                                  text="1 STRIKE", command=lambda: self.simon_says(1, True))
+        self.fourthButton = Button(self.bottomButtons, font=self.manual_font,
+                                   text="2 STRIKES", command=lambda: self.simon_says(2, True))
         self.fifthButton = Button(self.bottomButtons2, font=self.manual_font, fg="red")
-        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font, fg="green", state=DISABLED)
+        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font)
+        self.seventhButton = Button(self.bottomButtons2, font=self.manual_font, fg="green", state=DISABLED)
 
         self.firstButton.pack(side=LEFT, padx=10)
         self.thirdButton.pack(side=LEFT, padx=10)
         self.fourthButton.pack(side=LEFT, padx=10)
 
         self.buttons = [self.firstButton, self.secondButton, self.thirdButton, self.fourthButton,
-                        self.fifthButton, self.sixthButton]
+                        self.fifthButton, self.sixthButton, self.seventhButton]
 
         self.backButton = Button(self.simonSaysWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
@@ -69,42 +74,39 @@ class SimonSays:
                                   command=lambda: self.reset(1))
 
         self.backButton.pack(side=BOTTOM)
-        self.bomb_info()
-
-    def bomb_info(self):
-        self.firstButton.config(text="NO STRIKES", command=lambda: self.simon_says(0, True))
-        self.thirdButton.config(text="1 STRIKE", command=lambda: self.simon_says(1, True))
-        self.fourthButton.config(text="2 STRIKES", command=lambda: self.simon_says(2, True))
 
     def word(self, string):
-        if string != "clear":
+        if string != "clear" and string != "erase":
             self.label_list.append(string)
             self.ansLabel.config(text=' - '.join(self.label_list))
             self.simon_list.append(string)
+        elif string == "erase":
+            self.label_list = self.label_list[:-1]
+            self.ansLabel.config(text=' - '.join(self.label_list))
+            self.simon_list = self.simon_list[:-1]
         else:
             self.label_list.clear()
             self.simon_list.clear()
             self.ansLabel.config(text='')
         if len(self.simon_list) < 1:
-            self.sixthButton.config(state=DISABLED)
+            self.seventhButton.config(state=DISABLED)
         else:
-            self.sixthButton.config(state=NORMAL)
+            self.seventhButton.config(state=NORMAL)
 
     def simon_says(self, strikes, first_time):
         self.resetButton.place(x=0, y=0)
-        self.simon_list.clear()
-        self.label_list.clear()
-        self.sixthButton.config(state=DISABLED)
+        self.ansLabel.config(text=' - '.join(self.label_list))
         if first_time:
             self.info.append(strikes)
             self.info.append(self.vowel)
-        self.sixthButton.pack_forget()
+        self.seventhButton.pack_forget()
         self.selectLabel.config(text="SELECT ALL THE COLORS THAT FLASHES IN ORDER")
         but_config = [("BLUE", lambda: self.word("BLUE")),
                       ("YELLOW", lambda: self.word("YELLOW")),
                       ("RED", lambda: self.word("RED")),
                       ("GREEN", lambda: self.word("GREEN")),
                       ("CLEAR", lambda: self.word("clear")),
+                      ("ERASE", lambda: self.word("erase")),
                       ("NEXT", lambda: self.press())]
         i = 0
         for btn in but_config:
@@ -119,8 +121,9 @@ class SimonSays:
         self.thirdButton.pack_forget()
         self.fourthButton.pack_forget()
         self.fifthButton.pack_forget()
+        self.sixthButton.pack_forget()
         self.ansLabel.config(text="")
-        self.sixthButton.config(command=lambda: self.simon_says(0, False))
+        self.seventhButton.config(command=lambda: self.simon_says(0, False))
         for i in range(len(self.simon_list)):
             if self.simon_list[i] == "RED":
                 if self.info[1]:
@@ -141,12 +144,10 @@ class SimonSays:
 
             elif self.simon_list[i] == "BLUE":
                 if self.info[1]:
-                    if self.info[0] == 0:
+                    if self.info[0] == 0 or self.info[0] == 2:
                         ans_label.append("RED")
                     if self.info[0] == 1:
                         ans_label.append("GREEN")
-                    if self.info[0] == 2:
-                        ans_label.append("RED")
 
                 if not self.info[1]:
                     if self.info[0] == 0:
@@ -158,12 +159,10 @@ class SimonSays:
 
             elif self.simon_list[i] == "GREEN":
                 if self.info[1]:
-                    if self.info[0] == 0:
+                    if self.info[0] == 0 or self.info[0] == 2:
                         ans_label.append("YELLOW")
                     if self.info[0] == 1:
                         ans_label.append("BLUE")
-                    if self.info[0] == 2:
-                        ans_label.append("YELLOW")
 
                 if not self.info[1]:
                     if self.info[0] == 0:
@@ -183,12 +182,10 @@ class SimonSays:
                         ans_label.append("BLUE")
 
                 if not self.info[1]:
-                    if self.info[0] == 0:
+                    if self.info[0] == 0 or self.info[0] == 2:
                         ans_label.append("RED")
                     if self.info[0] == 1:
                         ans_label.append("GREEN")
-                    if self.info[0] == 2:
-                        ans_label.append("RED")
 
         if len(self.simon_list) != 0:
             self.selectLabel.config(text="PRESS '" + ', '.join(ans_label) + "' IN THAT ORDER")

@@ -214,7 +214,7 @@ THE MODULES THAT REQUIRE THAT INFORMATION.
         elif num == 10:
             Passwords(self.master, back, self.manual_font)
         elif num == 11:
-            Knob(self.master, back, self.manual_font)
+            Knob(self.master, back, self.manual_font, self.knob)
         else:
             print("No valid module")
 
