@@ -62,16 +62,15 @@ class Passwords:
 
     def passwords(self, iterations):
         self.resetButton.place(x=0, y=0)
-        times = ["SECOND", "THIRD", "FOURTH", "FIFTH"]
-        self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE " + times[iterations] + " POSITION\n\n\n")
+        times = ["SECOND", "THIRD", "FOURTH", "FIFTH", "FIRST"]
         entry = str(self.letters.get().translate({ord(i): None for i in '-._/ 1234567890"' + "'"}).lower())
         if entry == "":
-            self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE FIRST POSITION\n"
+            self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n"
                                          "MAKE SURE YOU WROTE ALL VALID LETTERS\n"
                                          "(NO NUMBERS, EMPTY SPACES OR SPECIAL CHARACTERS)\n"
-                                         "EXAMPLE: a-b-c-d-e-f")
+                                         "EXAMPLE: a-b-c-d-e-f".format(times[iterations - 1]))
             return None
-
+        self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n\n\n".format(times[iterations]))
         self.active = [x for x in self.all_passwords if x[iterations] in entry]
         self.all_passwords = self.active
         if len(self.active) == 1:
@@ -79,8 +78,13 @@ class Passwords:
             self.letters.pack_forget()
             self.infoLabel.pack_forget()
             self.selectLabel.config(text="THE WORD IS: " + ''.join(self.active).upper())
+
+        elif len(self.active) == 0:
+            self.nextButton.pack_forget()
+            self.letters.pack_forget()
+            self.infoLabel.pack_forget()
+            self.selectLabel.config(text="NO POSSIBLE MATCHES.\nMAKE SURE YOU INSERTED THE CORRECT LETTERS")
         else:
             self.letters.delete(0, "end")
-            self.infoLabel.config(text="POSSIBLE WORDS:\n" + ', '.join(self.active).upper())
+            self.infoLabel.config(text="POSSIBLE WORDS:\n" + '-'.join(self.active).upper())
             self.nextButton.config(command=lambda: self.passwords(iterations + 1))
-

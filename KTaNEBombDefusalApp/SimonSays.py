@@ -32,7 +32,6 @@ class SimonSays:
         self.topButtons = Frame(self.simonSaysWin, bg=back)
         self.bottomButtons = Frame(self.simonSaysWin, bg=back)
         self.bottomButtons2 = Frame(self.simonSaysWin, bg=back)
-        self.label_list = []
         self.simon_list = []
         self.info = []
 
@@ -77,15 +76,13 @@ class SimonSays:
 
     def word(self, string):
         if string != "clear" and string != "erase":
-            self.label_list.append(string)
-            self.ansLabel.config(text=' - '.join(self.label_list))
             self.simon_list.append(string)
+            self.ansLabel.config(text=' - '.join(self.simon_list))
+
         elif string == "erase":
-            self.label_list = self.label_list[:-1]
-            self.ansLabel.config(text=' - '.join(self.label_list))
             self.simon_list = self.simon_list[:-1]
+            self.ansLabel.config(text=' - '.join(self.simon_list))
         else:
-            self.label_list.clear()
             self.simon_list.clear()
             self.ansLabel.config(text='')
         if len(self.simon_list) < 1:
@@ -95,7 +92,7 @@ class SimonSays:
 
     def simon_says(self, strikes, first_time):
         self.resetButton.place(x=0, y=0)
-        self.ansLabel.config(text=' - '.join(self.label_list))
+        self.ansLabel.config(text=' - '.join(self.simon_list))
         if first_time:
             self.info.append(strikes)
             self.info.append(self.vowel)
@@ -189,4 +186,3 @@ class SimonSays:
 
         if len(self.simon_list) != 0:
             self.selectLabel.config(text="PRESS '" + ', '.join(ans_label) + "' IN THAT ORDER")
-

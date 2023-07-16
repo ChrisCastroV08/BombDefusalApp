@@ -31,7 +31,6 @@ class Keypad:
         self.bottomButtons = Frame(self.keypadWin, bg=back)
         self.bottomButtons2 = Frame(self.keypadWin, bg=back)
         self.labels = Frame(self.keypadWin, bg=back)
-        self.nextButton = Button(self.keypadWin, text="NEXT", font=("Terminal", 20), state=DISABLED)
         self.nameLabel.pack(side=TOP, pady=30)
         self.selectLabel.pack(side=TOP, pady=30)
 
@@ -44,7 +43,6 @@ class Keypad:
         self.topButtons2.pack(pady=10)
         self.bottomButtons.pack()
         self.bottomButtons2.pack(pady=10)
-        self.nextButton.pack()
 
         self.img = Image.open("Images/KeypadSymbols.PNG")
 
@@ -102,11 +100,13 @@ class Keypad:
         for i in range(len(self.buttons)):
             self.buttons[i].pack(side=LEFT, padx=5)
 
+        self.nextButton = Button(self.keypadWin, text="NEXT", font=("Terminal", 20), state=DISABLED,
+                                 command=lambda: self.compare(0))
         self.backButton = Button(self.keypadWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
                                  command=lambda: self.reset(0))
         self.resetButton = Button(self.keypadWin, text="RESET", font=("Terminal", 20),
                                   command=lambda: self.reset(1))
-
+        self.nextButton.pack()
         self.backButton.pack(side=BOTTOM)
 
     def img_crop(self, i, j):
@@ -128,7 +128,7 @@ class Keypad:
             if self.states[i]:
                 on = on + 1
         if on == 4:
-            self.nextButton.config(state=NORMAL, command=lambda: self.compare(0))
+            self.nextButton.config(state=NORMAL)
         else:
             self.nextButton.config(state=DISABLED)
 
@@ -141,7 +141,6 @@ class Keypad:
                    [16, 17, 18, 5, 10, 14, 19],
                    [20, 19, 18, 22, 17, 23, 24],
                    [16, 8, 21, 25, 20, 26, 27]]
-        lbl = 0
         possible = [
             [self.states[0], self.states[1], self.states[2], self.states[3], self.states[4], self.states[5],
              self.states[6]],
@@ -167,7 +166,6 @@ class Keypad:
 
         labels = [self.firstSymbol, self.secondSymbol, self.thirdSymbol, self.fourthSymbol]
 
-        self.selectLabel.config(text="PRESS THE SYMBOLS IN THE ORDER THAT\nAPPEAR HERE (LEFT TO RIGHT)")
         self.topButtons.pack_forget()
         self.topButtons2.pack_forget()
         self.bottomButtons.pack_forget()
@@ -181,6 +179,8 @@ class Keypad:
 
         if pressed[0] in symbols[num] and pressed[1] in symbols[num] and pressed[2] in symbols[num] \
                 and pressed[3] in symbols[num]:
+            self.selectLabel.config(text="PRESS THE SYMBOLS IN THE ORDER THAT\nAPPEAR HERE (LEFT TO RIGHT)")
+            lbl = 0
             for x in range(len(possible[num])):
                 if possible[num][x]:
                     labels[lbl].config(image=images[num][x])

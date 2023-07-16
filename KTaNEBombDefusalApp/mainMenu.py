@@ -20,9 +20,9 @@ class MainMenu:
 
     def reset(self):
         self.master.destroy()
-        self.__init__()
+        self.__init__(False)
 
-    def __init__(self):
+    def __init__(self, first):
         self.master = Tk()
         self.master.title("BombDefuseApp")
         self.master.resizable(False, False)
@@ -34,7 +34,8 @@ class MainMenu:
         self.manual_font = Font(family="Terminal", size=20)
         self.serial = ""
         self.batteries = -1
-        self.parallel = IntVar()
+        self.parallel_get = IntVar()
+        self.parallel = False
 
         self.wires = PhotoImage(file="Images/Wires.png")
         self.theButton = PhotoImage(file="Images/TheButton.png")
@@ -98,10 +99,11 @@ THE MODULES THAT REQUIRE THAT INFORMATION.
 
         self.parallel_port = Radiobutton(self.parallel_frame, text="BOMB HAS\nA PARALLEL PORT", fg="white",
                                          selectcolor=back, bg=back,
-                                         activebackground=back, font=self.manual_font, variable=self.parallel, value=1)
+                                         activebackground=back, font=self.manual_font, variable=self.parallel_get,
+                                         value=1)
         self.no_parallel_port = Radiobutton(self.parallel_frame, text="BOMB DOESN'T HAVE\nA PARALLEL PORT", fg="white",
                                             selectcolor=back, bg=back,
-                                            activebackground=back, font=self.manual_font, variable=self.parallel,
+                                            activebackground=back, font=self.manual_font, variable=self.parallel_get,
                                             value=0)
 
         self.serial_entry.pack()
@@ -150,6 +152,9 @@ THE MODULES THAT REQUIRE THAT INFORMATION.
             else:
                 Label(info[1], text=info[2], fg='white', font=self.manual_font, bg=back).pack(side=info[3])
 
+        if not first:
+            self.place_entries()
+
     def place_entries(self):
         self.nextButton.pack_forget()
         self.entryFrame.pack()
@@ -176,7 +181,7 @@ THE MODULES THAT REQUIRE THAT INFORMATION.
             self.selectLabel.config(text="WRITE ALL THE NECESSARY SPECIFICATIONS OF THE BOMB\n"
                                          "MAKE SURE YOU WROTE THE SERIAL NUMBER CORRECTLY")
             return None
-        if self.parallel.get() == 1:
+        if self.parallel_get.get() == 1:
             self.parallel = True
         else:
             self.parallel = False
