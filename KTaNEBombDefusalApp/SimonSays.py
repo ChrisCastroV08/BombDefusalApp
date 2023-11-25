@@ -27,6 +27,7 @@ class SimonSays:
                                text="ON THE SUBJECT OF SIMON SAYS")
         self.selectLabel = Label(self.simonSaysWin, font=self.manual_font, fg="white", bg=back,
                                  text="HOW MANY STRIKES THE DEFUSER HAS?")
+        self.colorLabel = Label(self.simonSaysWin, font=self.manual_font, fg="white", bg=back)
         self.ansLabel = Label(self.simonSaysWin, font=self.manual_font, fg="white", bg=back)
 
         self.topButtons = Frame(self.simonSaysWin, bg=back)
@@ -46,6 +47,7 @@ class SimonSays:
         self.topButtons.pack()
         self.bottomButtons.pack(pady=10)
         self.bottomButtons2.pack()
+        self.colorLabel.pack(pady=10)
         self.ansLabel.pack(pady=10)
 
         self.firstButton = Button(self.topButtons, font=self.manual_font,
@@ -56,9 +58,12 @@ class SimonSays:
                                   text="1 STRIKE", command=lambda: self.simon_says(1, True))
         self.fourthButton = Button(self.bottomButtons, font=self.manual_font,
                                    text="2 STRIKES", command=lambda: self.simon_says(2, True))
-        self.fifthButton = Button(self.bottomButtons2, font=self.manual_font, fg="red")
-        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font)
-        self.seventhButton = Button(self.bottomButtons2, font=self.manual_font, fg="green", state=DISABLED)
+        self.fifthButton = Button(self.bottomButtons2, font=self.manual_font,
+                                  text="CLEAR", command=lambda: self.word("clear"))
+        self.sixthButton = Button(self.bottomButtons2, font=self.manual_font,
+                                  text="ERASE", command=lambda: self.word("erase"))
+        self.seventhButton = Button(self.bottomButtons2, font=self.manual_font,
+                                    text="NEXT", command=lambda: self.press(), state=DISABLED)
 
         self.firstButton.pack(side=LEFT, padx=10)
         self.thirdButton.pack(side=LEFT, padx=10)
@@ -77,14 +82,14 @@ class SimonSays:
     def word(self, string):
         if string != "clear" and string != "erase":
             self.simon_list.append(string)
-            self.ansLabel.config(text=' - '.join(self.simon_list))
+            self.colorLabel.config(text=' - '.join(self.simon_list))
 
         elif string == "erase":
             self.simon_list = self.simon_list[:-1]
-            self.ansLabel.config(text=' - '.join(self.simon_list))
+            self.colorLabel.config(text=' - '.join(self.simon_list))
         else:
             self.simon_list.clear()
-            self.ansLabel.config(text='')
+            self.colorLabel.config(text='')
         if len(self.simon_list) < 1:
             self.seventhButton.config(state=DISABLED)
         else:
@@ -92,36 +97,30 @@ class SimonSays:
 
     def simon_says(self, strikes, first_time):
         self.resetButton.place(x=0, y=0)
-        self.ansLabel.config(text=' - '.join(self.simon_list))
+        self.colorLabel.config(text=' - '.join(self.simon_list))
         if first_time:
             self.info.append(strikes)
             self.info.append(self.vowel)
         self.seventhButton.pack_forget()
         self.selectLabel.config(text="SELECT ALL THE COLORS THAT FLASHES IN ORDER")
-        but_config = [("BLUE", lambda: self.word("BLUE")),
-                      ("YELLOW", lambda: self.word("YELLOW")),
-                      ("RED", lambda: self.word("RED")),
-                      ("GREEN", lambda: self.word("GREEN")),
-                      ("CLEAR", lambda: self.word("clear")),
-                      ("ERASE", lambda: self.word("erase")),
-                      ("NEXT", lambda: self.press())]
+        but_config = [("BLUE", lambda: self.word("BLUE"), "blue"),
+                      ("YELLOW", lambda: self.word("YELLOW"), "#cca002"),
+                      ("RED", lambda: self.word("RED"), "red"),
+                      ("GREEN", lambda: self.word("GREEN"), "green")]
         i = 0
         for btn in but_config:
-            self.buttons[i].config(text=btn[0], command=btn[1])
+            self.buttons[i].config(text=btn[0], command=btn[1], fg=btn[2])
             self.buttons[i].pack(side=LEFT, padx=10)
             i = i + 1
+        self.fifthButton.pack(side=LEFT, padx=10)
+        self.sixthButton.pack(side=LEFT, padx=10)
+        self.seventhButton.pack(side=LEFT, padx=10)
 
     def press(self):
         ans_label = []
-        self.firstButton.pack_forget()
-        self.secondButton.pack_forget()
-        self.thirdButton.pack_forget()
-        self.fourthButton.pack_forget()
-        self.fifthButton.pack_forget()
-        self.sixthButton.pack_forget()
-        self.ansLabel.config(text="")
-        self.seventhButton.config(command=lambda: self.simon_says(0, False))
+
         for i in range(len(self.simon_list)):
+
             if self.simon_list[i] == "RED":
                 if self.info[1]:
                     if self.info[0] == 0:
@@ -185,4 +184,4 @@ class SimonSays:
                         ans_label.append("GREEN")
 
         if len(self.simon_list) != 0:
-            self.selectLabel.config(text="PRESS '" + ', '.join(ans_label) + "' IN THAT ORDER")
+            self.ansLabel.config(text="PRESS '" + ', '.join(ans_label) + "' IN THAT ORDER")

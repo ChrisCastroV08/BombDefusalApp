@@ -155,7 +155,7 @@ class WhosOnFirst:
                  'LEED', 'HOLD ON', 'YOU', 'YOU ARE', 'YOUR', "YOU'RE", 'UR',
                  "THERE", "THEY'RE", "THEIR", "THEY ARE", "SEE", "C", "CEE"]
         self.resetButton.place(x=0, y=0)
-        self.selectLabel.config(text="SELECTED {}\n NOW TELL THE DEFUSER TO LOOK AT THE\n"
+        self.selectLabel.config(text="SELECTED '{}'\n NOW TELL THE DEFUSER TO LOOK AT THE\n"
                                      "{} BUTTON AND SELECT THE WORD OF THAT BUTTON".format(step1[sel], display))
 
         but_config = [("READY", lambda: self.word_list(0)),
@@ -213,7 +213,7 @@ class WhosOnFirst:
                   self.s28image]
         for i in range(len(images)):
             if list_num == i:
-                self.answerLabel.config(compound=BOTTOM, text="SELECTED " + step2[i], image=images[i])
+                self.answerLabel.config(compound=BOTTOM, text="SELECTED '" + step2[i] + "'", image=images[i])
                 break
 
     def img_crop(self, y):

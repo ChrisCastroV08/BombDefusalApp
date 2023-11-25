@@ -39,7 +39,6 @@ class Passwords:
                                  command=lambda: self.passwords(0))
 
         self.active = []
-        self.active2 = []
         self.all_passwords = [
             "about", "after", "again", "below", "could",
             "every", "first", "found", "great", "house",

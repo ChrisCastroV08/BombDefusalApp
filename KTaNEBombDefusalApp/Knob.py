@@ -10,11 +10,11 @@ class Knob:
             self.knobWin.destroy()
             self.__init__(self.root, self.back, self.manual_font, self.knobImage)
 
-    def __init__(self, root, back, manual_font, knobImage):
+    def __init__(self, root, back, manual_font, knob_image):
         self.root = root
         self.back = back
         self.manual_font = manual_font
-        self.knobImage = knobImage
+        self.knobImage = knob_image
         self.knobWin = Toplevel(self.root)
         self.knobWin.title("The Button")
         self.knobWin.resizable(False, False)
@@ -77,15 +77,15 @@ class Knob:
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
         self.thirdButton.pack_forget()
-        self.canvas.pack_forget()
+
         if led_s != "FIVE":
+            self.canvas.pack_forget()
             self.selectLabel.config(text="PLACE THE KNOB IN THE {} POSITION,\n"
                                          "RELATIVE TO THE 'UP' LABEL IN THE KNOB".format(led_s))
         else:
             self.selectLabel.config(text="IS THE TOP LEFT LED ON?")
             self.topButtons.pack()
             self.canvas.delete("first")
-            self.canvas.pack(pady=10)
             self.canvas.create_oval(20, 55, 30, 65, outline="red", width=2)
             self.firstButton.config(text="YES", command=lambda: self.check_led("RIGHT"))
             self.secondButton.config(text="NO", command=lambda: self.check_led("DOWN"))
