@@ -179,7 +179,7 @@
       <workItem from="1651016900110" duration="2506000" />
       <workItem from="1651269968900" duration="4094000" />
       <workItem from="1653850209192" duration="2376000" />
-      <workItem from="1700857100765" duration="19831000" />
+      <workItem from="1700857100765" duration="22788000" />
     </task>
     <servers />
   </component>
@@ -207,22 +207,22 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="552" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1700863336193" />
-    <state width="914" height="279" key="GridCell.Tab.0.bottom" timestamp="1700882062914">
+    <state width="914" height="279" key="GridCell.Tab.0.bottom" timestamp="1700885739218">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="914" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1700882062914" />
-    <state width="914" height="279" key="GridCell.Tab.0.center" timestamp="1700882062913">
+    <state width="914" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1700885739218" />
+    <state width="914" height="279" key="GridCell.Tab.0.center" timestamp="1700885739218">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="914" height="279" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1700882062913" />
-    <state width="914" height="279" key="GridCell.Tab.0.left" timestamp="1700882062913">
+    <state width="914" height="279" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1700885739218" />
+    <state width="914" height="279" key="GridCell.Tab.0.left" timestamp="1700885739218">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="914" height="279" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1700882062913" />
-    <state width="914" height="279" key="GridCell.Tab.0.right" timestamp="1700882062913">
+    <state width="914" height="279" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1700885739218" />
+    <state width="914" height="279" key="GridCell.Tab.0.right" timestamp="1700885739218">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="914" height="279" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1700882062913" />
+    <state width="914" height="279" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1700885739218" />
     <state width="1877" height="359" key="GridCell.Tab.1.bottom" timestamp="1700871535196">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -249,7 +249,7 @@
     <state x="514" y="269" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1080@0.0.1920.1080" timestamp="1700858527512" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/BombDefusalApp$main.coverage" NAME="main Coverage Results" MODIFIED="1700882062903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
+    <SUITE FILE_PATH="coverage/BombDefusalApp$main.coverage" NAME="main Coverage Results" MODIFIED="1700885969569" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
     <SUITE FILE_PATH="coverage/BombDefusalApp$Passwords.coverage" NAME="Passwords Coverage Results" MODIFIED="1700859387445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
     <SUITE FILE_PATH="coverage/BombDefusalApp$cropping_example.coverage" NAME="cropping example Coverage Results" MODIFIED="1648707531298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Desktop/Python/Image cropping example" />
   </component>

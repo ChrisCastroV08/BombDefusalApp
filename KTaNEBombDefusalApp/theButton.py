@@ -36,11 +36,11 @@ class TheButton:
         self.topButtons.pack()
         self.bottomButtons.pack(pady=10)
 
-        self.firstButton = Button(self.topButtons)
-        self.secondButton = Button(self.topButtons)
-        self.thirdButton = Button(self.topButtons)
-        self.fourthButton = Button(self.bottomButtons)
-        self.fifthButton = Button(self.bottomButtons)
+        self.firstButton = Button(self.topButtons, font=self.manual_font)
+        self.secondButton = Button(self.topButtons, font=self.manual_font)
+        self.thirdButton = Button(self.topButtons, font=self.manual_font)
+        self.fourthButton = Button(self.bottomButtons, font=self.manual_font)
+        self.fifthButton = Button(self.bottomButtons, font=self.manual_font)
 
         self.firstButton.pack(side=LEFT, padx=10)
         self.secondButton.pack(side=LEFT, padx=10)
@@ -60,37 +60,47 @@ class TheButton:
     def the_button(self, color, text, indicator):
         if color == "":
             self.selectLabel.config(text="WHAT COLOR IS THE BUTTON?")
-            self.firstButton.config(image='', text="BLUE", font=self.manual_font,
-                                    command=lambda: self.ask_the_button("blue", "", ""))
-            self.secondButton.config(image='', text="WHITE", font=self.manual_font,
+            self.firstButton.config(text="BLUE", fg="blue", command=lambda: self.ask_the_button("blue", "", ""))
+            self.secondButton.config(text="WHITE", fg="white", bg="#a6a6a6",
                                      command=lambda: self.ask_the_button("white", "", ""))
-            self.thirdButton.config(image='', text="YELLOW", font=self.manual_font,
+            self.thirdButton.config(text="YELLOW", fg="#cca002",
                                     command=lambda: self.ask_the_button("yellow", "", ""))
-            self.fourthButton.config(image='', text="RED", font=self.manual_font,
-                                     command=lambda: self.ask_the_button("red", "", ""))
-            self.fifthButton.config(image='', text="OTHER", font=self.manual_font,
-                                    command=lambda: self.ask_the_button("other", "", ""))
+            self.fourthButton.config(text="RED", fg="red", command=lambda: self.ask_the_button("red", "", ""))
+            self.fifthButton.config(text="OTHER", command=lambda: self.ask_the_button("other", "", ""))
         elif text == "":
+            fg_color = "black"
+            if color == "yellow":
+                bg_color = "#cca002"
+            elif color == "other":
+                bg_color = "black"
+                fg_color = "white"
+            elif color == "blue":
+                bg_color = "blue"
+                fg_color = "white"
+            else:
+                bg_color = color
             self.resetButton.place(x=0, y=0)
             self.fifthButton.pack_forget()
             self.selectLabel.config(text="WHAT DOES THE BUTTON SAY?")
-            self.firstButton.config(image='', text="ABORT", font=self.manual_font,
+            self.firstButton.config(text="ABORT", bg=bg_color, fg=fg_color,
                                     command=lambda: self.ask_the_button(color, "abort", ""))
-            self.secondButton.config(image='', text="DETONATE", font=self.manual_font,
+            self.secondButton.config(text="DETONATE", bg=bg_color, fg=fg_color,
                                      command=lambda: self.ask_the_button(color, "detonate", ""))
-            self.thirdButton.config(image='', text="HOLD", font=self.manual_font,
+            self.thirdButton.config(text="HOLD", bg=bg_color, fg=fg_color,
                                     command=lambda: self.ask_the_button(color, "hold", ""))
-            self.fourthButton.config(image='', text="OTHER", font=self.manual_font,
+            self.fourthButton.config(text="OTHER", bg=bg_color, fg=fg_color,
                                      command=lambda: self.ask_the_button(color, "other", ""))
 
         elif (indicator == "") and (color == "white" or self.batteries > 2):
+            bg_color = "white"
+            fg_color = "black"
             self.fourthButton.pack_forget()
             self.selectLabel.config(text="IS THERE A LIT INDICATOR WITH ANY OF THESE LABELS?")
-            self.firstButton.config(image='', text="CAR", font=self.manual_font,
+            self.firstButton.config(text="CAR", bg=bg_color, fg=fg_color,
                                     command=lambda: self.ask_the_button(color, text, "car"))
-            self.secondButton.config(image='', text="FRK", font=self.manual_font,
+            self.secondButton.config(text="FRK", bg=bg_color, fg=fg_color,
                                      command=lambda: self.ask_the_button(color, text, "frk"))
-            self.thirdButton.config(image='', text="OTHER/NONE", font=self.manual_font,
+            self.thirdButton.config(text="OTHER/NONE", bg=bg_color, fg=fg_color,
                                     command=lambda: self.ask_the_button(color, text, "other"))
 
         else:
@@ -121,11 +131,11 @@ class TheButton:
         if color == "":
             self.fourthButton.pack_forget()
             self.selectLabel.config(text="HOLD DOWN THE BUTTON AND\nSELECT THE COLOR OF THE STRIP ON THE SIDE")
-            self.firstButton.config(text="BLUE STRIP", font=self.manual_font,
+            self.firstButton.config(text="BLUE STRIP", fg="blue", bg="white",
                                     command=lambda: self.hold_button(4))
-            self.secondButton.config(text="YELLOW STRIP", font=self.manual_font,
+            self.secondButton.config(text="YELLOW STRIP", fg="#cca002", bg="white",
                                      command=lambda: self.hold_button(5))
-            self.thirdButton.config(text="OTHER COLOR STRIP", font=self.manual_font,
+            self.thirdButton.config(text="OTHER COLOR STRIP", fg= "black", bg="white",
                                     command=lambda: self.hold_button(1))
         else:
             self.topButtons.pack_forget()

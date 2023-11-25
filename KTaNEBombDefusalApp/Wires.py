@@ -165,7 +165,7 @@ class Wires:
                 self.cut_wire("THIRD")
             elif self.wire_list.count("yellow") == 1 and self.wire_list.count("white") >= 2 \
                     or self.wire_list.count("red") >= 1 and self.wire_list.count("yellow") >= 2 \
-                    or self.wire_list.count("white") >= 1 and self.wire_list.count("red") >= 1:
+                    or self.wire_list.count("white") <= 1 and self.wire_list.count("red") >= 1:
                 self.cut_wire("FOURTH")
             else:
                 self.cut_wire("LAST")
