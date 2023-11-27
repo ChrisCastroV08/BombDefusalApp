@@ -91,7 +91,6 @@ class Wires:
         self.wire_list = []
 
     def place_wires(self, string):
-        self.resetButton.place(x=0, y=0)
         if string != "clear" and string != "erase":
             self.canvas.create_line(self.draw_wires[len(self.wire_list)], fill=string, width=4, smooth=1,
                                     tags=("wire {}".format(len(self.wire_list)), "wires"))
@@ -124,6 +123,7 @@ class Wires:
             self.fifthButton.config(state=NORMAL)
 
     def cut_wire(self, wire):
+        self.resetButton.place(x=0, y=0)
         self.topButtons.pack_forget()
         self.bottomButtons.pack_forget()
         self.bottomButtons2.pack_forget()
@@ -131,6 +131,7 @@ class Wires:
 
     def check_wires(self):
         wires = len(self.wire_list)
+        # 3 WIRES
         if wires == 3:
             if "red" not in self.wire_list:
                 self.cut_wire("SECOND")
@@ -138,7 +139,7 @@ class Wires:
                 self.cut_wire("LAST")
             else:
                 self.cut_wire("LAST BLUE")
-
+        # 4 WIRES
         elif wires == 4:
             if self.wire_list.count("red") >= 2 and (int(self.serial[-1]) % 2) != 0:
                 self.cut_wire("LAST RED")
@@ -150,7 +151,7 @@ class Wires:
                 self.cut_wire("LAST")
             else:
                 self.cut_wire("SECOND")
-
+        # 5 WIRES
         elif wires == 5:
             if self.wire_list[-1] == "black" and (int(self.serial[-1]) % 2) != 0:
                 self.cut_wire("FOURTH")
@@ -159,7 +160,7 @@ class Wires:
                 self.cut_wire("FIRST")
             elif "black" not in self.wire_list:
                 self.cut_wire("SECOND")
-
+        # 6 WIRES
         else:
             if "yellow" not in self.wire_list and (int(self.serial[-1]) % 2) != 0:
                 self.cut_wire("THIRD")

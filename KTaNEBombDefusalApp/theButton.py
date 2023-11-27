@@ -115,32 +115,31 @@ class TheButton:
             self.hold_button("")
         elif self.batteries > 2 and indicator == "frk":
             self.hold_button("release")
-        elif color == "yellow" and self.batteries != -1 and indicator != "":
-            self.resetButton.place(x=0, y=0)
+        elif color == "yellow" and indicator != "":
             self.hold_button("")
         elif color == "red" and text == "hold":
             self.hold_button("release")
         else:
             self.the_button(color, text, indicator)
 
-    def hold_button(self, color):
+    def hold_button(self, seconds):
         self.thirdButton.pack(padx=10, side=LEFT)
         self.fourthButton.pack(padx=10, side=LEFT)
         self.fifthButton.pack_forget()
 
-        if color == "":
+        if seconds == "":
             self.fourthButton.pack_forget()
             self.selectLabel.config(text="HOLD DOWN THE BUTTON AND\nSELECT THE COLOR OF THE STRIP ON THE SIDE")
             self.firstButton.config(text="BLUE STRIP", fg="blue", bg="white",
                                     command=lambda: self.hold_button(4))
             self.secondButton.config(text="YELLOW STRIP", fg="#cca002", bg="white",
                                      command=lambda: self.hold_button(5))
-            self.thirdButton.config(text="OTHER COLOR STRIP", fg= "black", bg="white",
+            self.thirdButton.config(text="OTHER COLOR STRIP", fg="black", bg="white",
                                     command=lambda: self.hold_button(1))
         else:
             self.topButtons.pack_forget()
             self.bottomButtons.pack_forget()
-            if isinstance(color, int):
-                self.selectLabel.config(text="RELEASE WHEN THE COUNTDOWN TIMER HAS\nA {} IN ANY POSITION".format(color))
+            if isinstance(seconds, int):
+                self.selectLabel.config(text="RELEASE WHEN THE COUNTDOWN TIMER HAS\nA {} IN ANY POSITION".format(seconds))
             else:
                 self.selectLabel.config(text="PRESS AND IMMEDIATELY RELEASE THE BUTTON")

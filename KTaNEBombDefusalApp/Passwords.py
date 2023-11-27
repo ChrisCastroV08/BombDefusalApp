@@ -85,5 +85,12 @@ class Passwords:
             self.selectLabel.config(text="NO POSSIBLE MATCHES.\nMAKE SURE YOU INSERTED THE CORRECT LETTERS")
         else:
             self.letters.delete(0, "end")
-            self.infoLabel.config(text="POSSIBLE WORDS:\n" + '-'.join(self.active).upper())
             self.nextButton.config(command=lambda: self.passwords(iterations + 1))
+            if len(self.active) >= 10:
+                active = []
+                for i in range(9):
+                    active.append(self.active[i])
+                print(active)
+                self.infoLabel.config(text="POSSIBLE WORDS:\n" + '\n'.join(active).upper() + "\n...")
+            else:
+                self.infoLabel.config(text="POSSIBLE WORDS:\n" + '\n'.join(self.active).upper())
