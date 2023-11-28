@@ -43,7 +43,7 @@ class Passwords:
                                    command=lambda: self.check_entry(True))
         self.special = ''' `,~,!,@,#,$,%,^,&,*,(,),_,-,+,=,{,[,],},|,\\,:,;,",',<,,,>,.,?,/1234567890'''
         self.active = []
-
+        self.first = True
         self.old_letters = []
         self.old_possible = []
         self.times = 0
@@ -70,6 +70,9 @@ class Passwords:
         self.backButton.pack(side=BOTTOM)
 
     def check_entry(self, back):
+        if self.first:
+            self.resetButton.place(x=0, y=0)
+            self.first = False
         times = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"]
         if not back:
             entry = str(self.letters.get().translate({ord(i): None for i in self.special}).lower())
