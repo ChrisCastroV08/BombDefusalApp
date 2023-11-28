@@ -160,11 +160,12 @@ class ComplexWires:
 
         self.selectLabel.config(text='CUT ALL THE WIRES CIRCLED IN GREEN')
         cut_list = []
+        wire_list = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH"]
         for cut in range(len(self.cut_wires_list)):
             if self.cut_wires_list[cut]:
-                cut_list.append("CUT")
+                cut_list.append("CUT THE {} WIRE".format(wire_list[cut]))
             else:
-                cut_list.append("DONT CUT")
+                cut_list.append("DO NOT CUT THE {} WIRE".format(wire_list[cut]))
         self.infoLabel.config(text='\n'.join(cut_list))
 
         for circle in range(len(self.cut_wires_list)):

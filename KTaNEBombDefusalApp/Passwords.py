@@ -35,10 +35,18 @@ class Passwords:
         self.letters = Entry(self.passWin, font=self.manual_font)
         self.letters.focus()
 
-        self.nextButton = Button(self.passWin, font=self.manual_font, text="NEXT",
-                                 command=lambda: self.passwords(0))
+        self.topButtons = Frame(self.passWin, bg=back)
 
+        self.nextButton = Button(self.topButtons, font=self.manual_font, text="NEXT",
+                                 command=lambda: self.check_entry(False))
+        self.returnButton = Button(self.topButtons, font=self.manual_font, text="BACK", state=DISABLED,
+                                   command=lambda: self.check_entry(True))
+        self.special = ''' `,~,!,@,#,$,%,^,&,*,(,),_,-,+,=,{,[,],},|,\\,:,;,",',<,,,>,.,?,/1234567890'''
         self.active = []
+
+        self.old_letters = []
+        self.old_possible = []
+        self.times = 0
         self.all_passwords = [
             "about", "after", "again", "below", "could",
             "every", "first", "found", "great", "house",
@@ -49,7 +57,9 @@ class Passwords:
             "where", "which", "world", "would", "write"]
 
         self.letters.pack()
-        self.nextButton.pack(pady=10)
+        self.topButtons.pack(pady=10)
+        self.returnButton.pack(side=LEFT, padx=10)
+        self.nextButton.pack(side=LEFT, padx=10)
         self.infoLabel.pack(pady=10)
 
         self.backButton = Button(self.passWin, text="BACK TO\nMODULE SELECT", font=("Terminal", 20),
@@ -59,38 +69,86 @@ class Passwords:
 
         self.backButton.pack(side=BOTTOM)
 
-    def passwords(self, iterations):
-        self.resetButton.place(x=0, y=0)
-        times = ["SECOND", "THIRD", "FOURTH", "FIFTH", "FIRST"]
-        entry = str(self.letters.get().translate({ord(i): None for i in '-._/ 1234567890"' + "'"}).lower())
-        if entry == "":
-            self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n"
-                                         "MAKE SURE YOU WROTE ALL VALID LETTERS\n"
-                                         "(NO NUMBERS, EMPTY SPACES OR SPECIAL CHARACTERS)\n"
-                                         "EXAMPLE: a-b-c-d-e-f".format(times[iterations - 1]))
-            return None
-        self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n\n\n".format(times[iterations]))
-        self.active = [x for x in self.all_passwords if x[iterations] in entry]
-        self.all_passwords = self.active
+    def check_entry(self, back):
+        times = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"]
+        if not back:
+            entry = str(self.letters.get().translate({ord(i): None for i in self.special}).lower())
+            if entry == "":
+                self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n"
+                                             "MAKE SURE YOU WROTE ALL VALID LETTERS\n"
+                                             "(NO NUMBERS, EMPTY SPACES OR SPECIAL CHARACTERS)\n"
+                                             "EXAMPLE: abcdef".format(times[self.times]))
+                return None
+            self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n\n\n".format(times[
+                                                                                                      self.times + 1]))
+            self.returnButton.config(state=NORMAL)
+            self.old_letters.append(entry)
+            if self.times == 0:
+                self.active = [x for x in self.all_passwords if x[self.times] in self.old_letters[self.times]]
+            else:
+                self.active = [x for x in self.active if x[self.times] in self.old_letters[self.times]]
+            self.old_possible.append(self.active)
+            self.passwords(back)
+
+        else:
+            if isinstance(back, int):
+                self.letters.pack()
+                self.nextButton.pack(side=LEFT, padx=10)
+                self.infoLabel.pack(pady=10)
+
+            self.times -= 1
+            self.selectLabel.config(text="INSERT ALL THE LETTERS IN THE {} POSITION\n\n\n".format(times[
+                                                                                                      self.times]))
+            self.letters.delete(0, "end")
+            self.letters.insert(0, self.old_letters[self.times])
+            del (self.old_letters[-1])
+            self.active = self.old_possible[self.times - 1]
+            del (self.old_possible[-1])
+            self.passwords(back)
+
+    def passwords(self, back):
         if len(self.active) == 1:
             self.nextButton.pack_forget()
             self.letters.pack_forget()
             self.infoLabel.pack_forget()
+            self.returnButton.config(command=lambda: self.check_entry(1))
             self.selectLabel.config(text="THE WORD IS: " + ''.join(self.active).upper())
+            if not back:
+                self.letters.delete(0, "end")
+                self.times += 1
 
         elif len(self.active) == 0:
             self.nextButton.pack_forget()
             self.letters.pack_forget()
             self.infoLabel.pack_forget()
+            self.returnButton.config(command=lambda: self.check_entry(1))
             self.selectLabel.config(text="NO POSSIBLE MATCHES.\nMAKE SURE YOU INSERTED THE CORRECT LETTERS")
+
         else:
-            self.letters.delete(0, "end")
-            self.nextButton.config(command=lambda: self.passwords(iterations + 1))
             if len(self.active) >= 10:
                 active = []
                 for i in range(9):
                     active.append(self.active[i])
-                print(active)
-                self.infoLabel.config(text="POSSIBLE WORDS:\n" + '\n'.join(active).upper() + "\n...")
+                self.infoLabel.config(text="POSSIBLE WORDS:\n" + '\n'.join(active).upper() +
+                                           "\nAND {} MORE".format(len(self.active) - 9))
             else:
                 self.infoLabel.config(text="POSSIBLE WORDS:\n" + '\n'.join(self.active).upper())
+
+            if not back:
+                self.letters.delete(0, "end")
+                self.times += 1
+            else:
+                if self.times == 0:
+                    self.infoLabel.config(text="POSSIBLE WORDS:")
+                    self.returnButton.config(state=DISABLED)
+                else:
+                    self.returnButton.config(state=NORMAL)
+
+    def back_button(self):
+        self.times -= 1
+        self.letters.insert(0, self.old_letters[self.times - 1])
+        del (self.old_letters[-1])
+        self.active = self.old_possible[self.times - 1]
+        del (self.old_possible[-1])
+        self.check_entry(True)
+
