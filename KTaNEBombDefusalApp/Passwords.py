@@ -113,9 +113,8 @@ class Passwords:
             self.infoLabel.pack_forget()
             self.returnButton.config(command=lambda: self.check_entry(1))
             self.selectLabel.config(text="THE WORD IS: " + ''.join(self.active).upper())
-            if not back:
-                self.letters.delete(0, "end")
-                self.times += 1
+            self.letters.delete(0, "end")
+            self.times += 1
 
         elif len(self.active) == 0:
             self.nextButton.pack_forget()

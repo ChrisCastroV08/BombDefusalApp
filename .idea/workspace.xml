@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0be9b8be-5e84-4273-b60e-23766df6ea74" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KTaNEBombDefusalApp/ComplexWires.py" beforeDir="false" afterPath="$PROJECT_DIR$/KTaNEBombDefusalApp/ComplexWires.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KTaNEBombDefusalApp/Passwords.py" beforeDir="false" afterPath="$PROJECT_DIR$/KTaNEBombDefusalApp/Passwords.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -186,7 +185,7 @@
       <workItem from="1700857100765" duration="24367000" />
       <workItem from="1700934611042" duration="21678000" />
       <workItem from="1701020687882" duration="11582000" />
-      <workItem from="1701111865938" duration="19097000" />
+      <workItem from="1701111865938" duration="19480000" />
     </task>
     <servers />
   </component>
@@ -214,22 +213,22 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="552" y="198" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1700863336193" />
-    <state width="1877" height="359" key="GridCell.Tab.0.bottom" timestamp="1701134884460">
+    <state width="1877" height="293" key="GridCell.Tab.0.bottom" timestamp="1701135271405">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="359" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1701134884460" />
-    <state width="1877" height="359" key="GridCell.Tab.0.center" timestamp="1701134884460">
+    <state width="1877" height="293" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1701135271405" />
+    <state width="1877" height="293" key="GridCell.Tab.0.center" timestamp="1701135271405">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="359" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1701134884460" />
-    <state width="1877" height="359" key="GridCell.Tab.0.left" timestamp="1701134884460">
+    <state width="1877" height="293" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1701135271405" />
+    <state width="1877" height="293" key="GridCell.Tab.0.left" timestamp="1701135271405">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="359" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1701134884460" />
-    <state width="1877" height="359" key="GridCell.Tab.0.right" timestamp="1701134884460">
+    <state width="1877" height="293" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1701135271405" />
+    <state width="1877" height="293" key="GridCell.Tab.0.right" timestamp="1701135271405">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="359" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1701134884460" />
+    <state width="1877" height="293" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1701135271405" />
     <state width="1877" height="359" key="GridCell.Tab.1.bottom" timestamp="1701134884460">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -260,7 +259,7 @@
     <state x="616" y="192" width="670" height="676" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1701044855387" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/BombDefusalApp$main.coverage" NAME="main Coverage Results" MODIFIED="1701134942225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
+    <SUITE FILE_PATH="coverage/BombDefusalApp$main.coverage" NAME="main Coverage Results" MODIFIED="1701135271399" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
     <SUITE FILE_PATH="coverage/BombDefusalApp$Passwords.coverage" NAME="Passwords Coverage Results" MODIFIED="1700859387445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KTaNEBombDefusalApp" />
     <SUITE FILE_PATH="coverage/BombDefusalApp$cropping_example.coverage" NAME="cropping example Coverage Results" MODIFIED="1648707531298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Desktop/Python/Image cropping example" />
   </component>
