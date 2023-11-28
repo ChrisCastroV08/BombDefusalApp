@@ -122,6 +122,8 @@ class Passwords:
             self.infoLabel.pack_forget()
             self.returnButton.config(command=lambda: self.check_entry(1))
             self.selectLabel.config(text="NO POSSIBLE MATCHES.\nMAKE SURE YOU INSERTED THE CORRECT LETTERS")
+            self.letters.delete(0, "end")
+            self.times += 1
 
         else:
             if len(self.active) >= 10:
